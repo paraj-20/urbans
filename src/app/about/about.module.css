@@ -1,0 +1,293 @@
+.container {
+    min-height: 100vh;
+    padding-top: 85px;
+    /* Navbar offset */
+    background: var(--background);
+    color: var(--foreground);
+}
+
+.hero {
+    height: 60vh;
+    min-height: 400px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    background-image: url('https://images.unsplash.com/photo-1529139574466-a302d2d3f529?q=80&w=2000&auto=format&fit=crop');
+    background-size: cover;
+    background-position: center;
+}
+
+.heroOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.6);
+    z-index: 1;
+}
+
+.heroTitle {
+    position: relative;
+    z-index: 2;
+    font-size: 5rem;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+    color: #fff;
+    text-align: center;
+    animation: fadeIn 1s ease-out;
+}
+
+.statsSection {
+    display: flex;
+    justify-content: space-around;
+    padding: 4rem;
+    background: #0a0a0a;
+    border-bottom: 1px solid #222;
+}
+
+.statItem {
+    text-align: center;
+}
+
+.statNumber {
+    font-size: 3rem;
+    font-weight: 900;
+    color: var(--accent);
+    line-height: 1;
+    margin-bottom: 0.5rem;
+}
+
+.statLabel {
+    color: #888;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+}
+
+.mission {
+    padding: 6rem 4rem;
+    max-width: 1200px;
+    margin: 0 auto;
+    text-align: center;
+}
+
+.mission h2 {
+    font-size: 2.5rem;
+    margin-bottom: 2rem;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+}
+
+.mission p {
+    font-size: 1.2rem;
+    line-height: 1.6;
+    color: #ccc;
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+.values {
+    padding: 6rem 4rem;
+    background: #050505;
+}
+
+.sectionTitle {
+    text-align: center;
+    font-size: 2rem;
+    margin-bottom: 4rem;
+    letter-spacing: 0.1em;
+}
+
+.valuesGrid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 3rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.valueCard {
+    background: #111;
+    padding: 3rem;
+    border: 1px solid #222;
+    transition: transform 0.3s ease;
+}
+
+.valueCard:hover {
+    transform: translateY(-10px);
+    border-color: var(--accent);
+}
+
+.valueIcon {
+    font-size: 2rem;
+    margin-bottom: 1.5rem;
+    display: block;
+}
+
+.valueCard h3 {
+    font-size: 1.5rem;
+    margin-bottom: 1rem;
+}
+
+.valueCard p {
+    color: #888;
+    line-height: 1.5;
+}
+
+/* Team Section */
+.team {
+    padding: 6rem 4rem;
+}
+
+.teamGrid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+.memberCard {
+    text-align: center;
+    cursor: pointer;
+}
+
+.memberImage {
+    width: 100%;
+    aspect-ratio: 1;
+    background: #222;
+    margin-bottom: 1.5rem;
+    overflow: hidden;
+    position: relative;
+}
+
+.memberImage img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.5s ease;
+}
+
+.socialOverlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.socialOverlay span {
+    border: 1px solid var(--accent);
+    color: var(--accent);
+    padding: 0.5rem 1rem;
+    font-size: 0.8rem;
+    font-weight: 700;
+}
+
+.memberCard:hover .memberImage img {
+    transform: scale(1.1);
+}
+
+.memberCard:hover .socialOverlay {
+    opacity: 1;
+}
+
+.memberCard h4 {
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+}
+
+.memberCard p {
+    color: var(--accent);
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+}
+
+.ctaSection {
+    padding: 6rem 4rem;
+    text-align: center;
+    background: linear-gradient(to right, #111, #050505);
+    border-top: 1px solid #222;
+}
+
+.ctaSection h2 {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+}
+
+.ctaSection p {
+    color: #888;
+    margin-bottom: 2rem;
+}
+
+.ctaBtn {
+    background: #fff;
+    color: #000;
+    padding: 1rem 3rem;
+    font-weight: 700;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.ctaBtn:hover {
+    background: var(--accent);
+    transform: scale(1.05);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@media (max-width: 1024px) {
+    .valuesGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .teamGrid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media (max-width: 768px) {
+    .heroTitle {
+        font-size: 3rem;
+    }
+
+    .mission,
+    .values,
+    .team,
+    .statsSection,
+    .ctaSection {
+        padding: 4rem 2rem;
+    }
+
+    .valuesGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .teamGrid {
+        grid-template-columns: 1fr;
+    }
+
+    .statsSection {
+        flex-direction: column;
+        gap: 2rem;
+    }
+}
