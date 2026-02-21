@@ -14,6 +14,10 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
+import { CartProvider } from "@/context/CartContext";
+import { AuthProvider } from "@/context/AuthContext";
+import CartDrawer from "@/components/CartDrawer";
+
 export const metadata: Metadata = {
   title: "URBANS | Defining the Concrete Silhouette",
   description: "Luxury streetwear engineered for the modern metropolitan dweller.",
@@ -27,11 +31,16 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <Navbar />
-        <main style={{ minHeight: 'calc(100vh - 400px)' }}>
-          {children}
-        </main>
-        <Footer />
+        <AuthProvider>
+          <CartProvider>
+            <Navbar />
+            <CartDrawer />
+            <main style={{ minHeight: 'calc(100vh - 400px)' }}>
+              {children}
+            </main>
+            <Footer />
+          </CartProvider>
+        </AuthProvider>
       </body>
     </html>
   );

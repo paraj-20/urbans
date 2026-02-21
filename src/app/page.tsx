@@ -1,6 +1,6 @@
-
 import styles from "./page.module.css";
 import Image from "next/image";
+import Link from "next/link";
 
 export default function Home() {
   return (
@@ -8,28 +8,22 @@ export default function Home() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <div className={styles.springTag}>SPRING / SUMMER 2026</div>
-          <h1 className={styles.heroTitle}>
+          <div style={{ height: "15vh" }}></div>
+          <div className={styles.springTag}>THE RISE</div>
+          <h1 className={styles.heroTitle} style={{ marginBottom: "0.5rem" }}>
             URBANS:<br />
             <span className={styles.titleLine}>
-              <span>DEFINING THE</span>
-            </span>
-            <span className={styles.titleLine}>
-              <span className={styles.italicText}>CONCRETE</span>
-            </span>
-            <span className={styles.titleLine}>
-              <span>SILHOUETTE</span>
+              <span>BUILT FOR THE BOLD</span>
             </span>
           </h1>
 
-          <div className={styles.heroFooter}>
+          <div className={styles.heroFooter} style={{ marginTop: 0 }}>
             <button className={styles.viewBtn}>
               VIEW COLLECTION
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </button>
             <p className={styles.heroDesc}>
-              Luxury streetwear engineered for the modern metropolitan dweller.
-              Fusing architectural precision with editorial vision.
+              Crafted for the rhythm of the city. Sharp silhouettes, elevated essentials, and unapologetic confidence.
             </p>
           </div>
         </div>
@@ -44,20 +38,20 @@ export default function Home() {
       <section className={styles.categories}>
         <h2 className={styles.sectionTitle}>SHOP BY CATEGORY</h2>
         <div className={styles.categoryGrid}>
-          <div className={styles.categoryCard}>
+          <Link href="/men" className={styles.categoryCard} style={{ display: 'block' }}>
             <div className={styles.categoryImage}></div>
             <div className={styles.categoryOverlay}>
               <h3>MEN</h3>
-              <button>EXPLORE <span className="arrow">→</span></button>
+              <div className={styles.exploreBtn}>EXPLORE <span className="arrow">→</span></div>
             </div>
-          </div>
-          <div className={styles.categoryCard}>
+          </Link>
+          <Link href="/women" className={styles.categoryCard} style={{ display: 'block' }}>
             <div className={styles.categoryImage}></div>
             <div className={styles.categoryOverlay}>
               <h3>WOMEN</h3>
-              <button>EXPLORE <span className="arrow">→</span></button>
+              <div className={styles.exploreBtn}>EXPLORE <span className="arrow">→</span></div>
             </div>
-          </div>
+          </Link>
         </div>
       </section>
 

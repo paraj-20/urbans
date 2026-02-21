@@ -242,7 +242,6 @@
   font-size: clamp(2rem, 4.5vw, 4.5rem);
   line-height: 0.95;
   margin-bottom: 1rem;
-  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8);
   display: flex;
   flex-direction: column;
 }
@@ -393,7 +392,7 @@
   margin-bottom: 1rem;
 }
 
-.categoryOverlay button {
+.categoryOverlay .exploreBtn {
   color: var(--accent);
   font-weight: 700;
   letter-spacing: 0.1em;

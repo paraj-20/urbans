@@ -2,11 +2,18 @@
 
 import { useState } from "react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
 import styles from "./navbar.module.css";
+import { useCart } from "@/context/CartContext";
+import { useAuth } from '@/context/AuthContext';
 
 export default function Navbar() {
     const [isMenuOpen, setIsMenuOpen] = useState(false);
     const [activeCategory, setActiveCategory] = useState<null | 'MEN' | 'WOMEN'>(null);
+    const { items, setIsCartOpen } = useCart();
+    const { user, logout } = useAuth();
+    const router = useRouter();
+    const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
 
     const toggleMenu = () => {
         setIsMenuOpen(!isMenuOpen);
@@ -20,19 +27,38 @@ export default function Navbar() {
         }
     };
 
+    const handleCategoryClick = (category: 'MEN' | 'WOMEN') => {
+        router.push(`/${category.toLowerCase()}`);
+        setActiveCategory(null);
+        setIsMenuOpen(false);
+    };
+
+    const handleSubLinkClick = (category: string, item: string) => {
+        const hash = item.toLowerCase().replace(/ /g, '-').replace(/&/g, 'and');
+        router.push(`/${category.toLowerCase()}#${hash}`);
+        setActiveCategory(null);
+        setIsMenuOpen(false);
+    };
+
+    const handleLogout = async () => {
+        await logout();
+        setIsUserDropdownOpen(false);
+        router.push('/');
+    };
+
     const megaMenuData = {
         MEN: {
-            Clothing: ["Shirts", "T-shirts", "Jackets", "Pants", "Jeans"],
+            Clothing: ["Shirts", "T-shirts", "Jackets", "Pants", "Jeans", "Aesthetics"],
             Accessories: ["Caps", "Backpacks"]
         },
         WOMEN: {
-            Clothing: ["T-shirts", "Tops", "Shorts", "Joggers & Track Pants", "Sweatshirts", "Jackets", "Pants", "Jeans"],
-            Accessories: ["Caps", "Bags", "Gym Bags"]
+            Clothing: ["Shirts", "T-shirts", "Jackets", "Pants", "Jeans", "Aesthetics"],
+            Accessories: ["Caps", "Backpacks"]
         }
     };
 
     return (
-        <nav className={styles.navbar} onMouseLeave={() => setActiveCategory(null)}>
+        <nav className={styles.navbar} onMouseLeave={() => { setActiveCategory(null); setIsUserDropdownOpen(false) }}>
             <div className={styles.navLeft}>
                 {/* Hamburger Button (Mobile Only) */}
                 <button className={styles.hamburgerBtn} onClick={toggleMenu} aria-label="Toggle Menu">
@@ -53,14 +79,14 @@ export default function Navbar() {
                 <div className={`${styles.navLinks} ${styles.desktopLinks}`}>
                     <button
                         className={styles.navLinkBtn}
-                        onClick={() => toggleCategory('MEN')}
+                        onClick={() => handleCategoryClick('MEN')}
                         onMouseEnter={() => setActiveCategory('MEN')}
                     >
                         MEN
                     </button>
                     <button
                         className={styles.navLinkBtn}
-                        onClick={() => toggleCategory('WOMEN')}
+                        onClick={() => handleCategoryClick('WOMEN')}
                         onMouseEnter={() => setActiveCategory('WOMEN')}
                     >
                         WOMEN
@@ -73,10 +99,32 @@ export default function Navbar() {
             </div>
 
             <div className={styles.navIcons}>
-                <button className={styles.iconBtn} aria-label="Shopping Bag">
+                <button className={styles.iconBtn} aria-label="Shopping Bag" onClick={() => setIsCartOpen(true)}>
                     <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4Z"></path><line x1="3" y1="6" x2="21" y2="6"></line><path d="M16 10a4 4 0 0 1-8 0"></path></svg>
+                    {items.length > 0 && (
+                        <span className={styles.cartBadge}>{items.reduce((acc, item) => acc + item.quantity, 0)}</span>
+                    )}
                 </button>
-                <button className={styles.loginBtn}>LOGIN</button>
+                {user ? (
+                    <div
+                        className={styles.userMenuContainer}
+                        onMouseEnter={() => setIsUserDropdownOpen(true)}
+                        onMouseLeave={() => setIsUserDropdownOpen(false)}
+                    >
+                        <button className={styles.loginBtn} onClick={() => setIsUserDropdownOpen(!isUserDropdownOpen)}>
+                            {user.name.toUpperCase()}
+                        </button>
+                        {isUserDropdownOpen && (
+                            <div className={styles.userDropdown}>
+                                <div className={styles.userGreeting}>HI, {user.name.split(' ')[0].toUpperCase()}</div>
+                                <Link href="/settings" className={styles.userDropdownLink} onClick={() => setIsUserDropdownOpen(false)}>SETTINGS</Link>
+                                <button className={styles.userDropdownBtn} onClick={handleLogout}>LOGOUT</button>
+                            </div>
+                        )}
+                    </div>
+                ) : (
+                    <Link href="/login" className={styles.loginBtn}>LOGIN</Link>
+                )}
             </div>
 
             {/* Mega Menu Overlay */}
@@ -89,7 +137,9 @@ export default function Navbar() {
                                 <ul className={styles.megaMenuList}>
                                     {items.map((item) => (
                                         <li key={item}>
-                                            <Link href="#">{item}</Link>
+                                            <button className={styles.navSublinkBtn} onClick={() => handleSubLinkClick(activeCategory, item)}>
+                                                {item}
+                                            </button>
                                         </li>
                                     ))}
                                 </ul>
@@ -109,28 +159,32 @@ export default function Navbar() {
             {/* Mobile Menu Overlay */}
             <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
                 <div className={styles.mobileLinks}>
-                    <button className={styles.mobileLinkBtn} onClick={() => toggleCategory('MEN')}>MEN</button>
+                    <button className={styles.mobileLinkBtn} onClick={() => handleCategoryClick('MEN')}>MEN</button>
                     {activeCategory === 'MEN' && (
                         <div className={styles.mobileSubmenu}>
                             {Object.entries(megaMenuData['MEN']).map(([section, items]) => (
                                 <div key={section} className={styles.mobileSubmenuSection}>
                                     <h5 className={styles.mobileSubmenuTitle}>{section}</h5>
                                     {items.map(item => (
-                                        <Link key={item} href="#" className={styles.mobileSubmenuItem} onClick={toggleMenu}>{item}</Link>
+                                        <button key={item} className={styles.mobileSubmenuItem} onClick={() => handleSubLinkClick('MEN', item)}>
+                                            {item}
+                                        </button>
                                     ))}
                                 </div>
                             ))}
                         </div>
                     )}
 
-                    <button className={styles.mobileLinkBtn} onClick={() => toggleCategory('WOMEN')}>WOMEN</button>
+                    <button className={styles.mobileLinkBtn} onClick={() => handleCategoryClick('WOMEN')}>WOMEN</button>
                     {activeCategory === 'WOMEN' && (
                         <div className={styles.mobileSubmenu}>
                             {Object.entries(megaMenuData['WOMEN']).map(([section, items]) => (
                                 <div key={section} className={styles.mobileSubmenuSection}>
                                     <h5 className={styles.mobileSubmenuTitle}>{section}</h5>
                                     {items.map(item => (
-                                        <Link key={item} href="#" className={styles.mobileSubmenuItem} onClick={toggleMenu}>{item}</Link>
+                                        <button key={item} className={styles.mobileSubmenuItem} onClick={() => handleSubLinkClick('WOMEN', item)}>
+                                            {item}
+                                        </button>
                                     ))}
                                 </div>
                             ))}

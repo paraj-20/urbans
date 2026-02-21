@@ -4,18 +4,39 @@ import { useState } from 'react';
 import styles from './contact.module.css';
 
 export default function Contact() {
-    const [formState, setFormState] = useState<'idle' | 'submitting' | 'success'>('idle');
+    const [formState, setFormState] = useState<'idle' | 'submitting' | 'success' | 'error'>('idle');
     const [activeFaq, setActiveFaq] = useState<number | null>(null);
 
-    const handleSubmit = (e: React.FormEvent) => {
+    const [name, setName] = useState('');
+    const [email, setEmail] = useState('');
+    const [subject, setSubject] = useState('General Inquiry');
+    const [message, setMessage] = useState('');
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setFormState('submitting');
-        // Simulate API call
-        setTimeout(() => {
+
+        try {
+            const res = await fetch('/api/contact', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ name, email, subject, message })
+            });
+
+            if (!res.ok) throw new Error('Failed to send message');
+
             setFormState('success');
-            // Reset after 3 seconds
+            setName('');
+            setEmail('');
+            setSubject('General Inquiry');
+            setMessage('');
+
             setTimeout(() => setFormState('idle'), 5000);
-        }, 1500);
+        } catch (error) {
+            console.error('Submission error', error);
+            setFormState('error');
+            setTimeout(() => setFormState('idle'), 5000);
+        }
     };
 
     const toggleFaq = (index: number) => {
@@ -88,15 +109,31 @@ export default function Contact() {
                     <form className={styles.form} onSubmit={handleSubmit}>
                         <div className={styles.inputGroup}>
                             <label>NAME</label>
-                            <input type="text" placeholder="JOHN DOE" required />
+                            <input
+                                type="text"
+                                placeholder="JOHN DOE"
+                                required
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
+                            />
                         </div>
                         <div className={styles.inputGroup}>
                             <label>EMAIL</label>
-                            <input type="email" placeholder="JOHN@EXAMPLE.COM" required />
+                            <input
+                                type="email"
+                                placeholder="JOHN@EXAMPLE.COM"
+                                required
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
                         </div>
                         <div className={styles.inputGroup}>
                             <label>SUBJECT</label>
-                            <select className={styles.selectInput}>
+                            <select
+                                className={styles.selectInput}
+                                value={subject}
+                                onChange={(e) => setSubject(e.target.value)}
+                            >
                                 <option>General Inquiry</option>
                                 <option>Order Support</option>
                                 <option>Collaboration</option>
@@ -105,12 +142,22 @@ export default function Contact() {
                         </div>
                         <div className={styles.inputGroup}>
                             <label>MESSAGE</label>
-                            <textarea rows={6} placeholder="TYPE YOUR MESSAGE HERE..." required></textarea>
+                            <textarea
+                                rows={6}
+                                placeholder="TYPE YOUR MESSAGE HERE..."
+                                required
+                                value={message}
+                                onChange={(e) => setMessage(e.target.value)}
+                            ></textarea>
                         </div>
 
                         {formState === 'success' ? (
                             <div className={styles.successMessage}>
                                 MESSAGE SENT SUCCESSFULLY. WE'LL BE IN TOUCH.
+                            </div>
+                        ) : formState === 'error' ? (
+                            <div className={styles.successMessage} style={{ backgroundColor: 'rgba(255, 68, 68, 0.1)', color: '#ff4444', borderColor: '#ff4444' }}>
+                                FAILED TO SEND MESSAGE. PLEASE TRY AGAIN.
                             </div>
                         ) : (
                             <button

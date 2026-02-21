@@ -18,37 +18,8 @@ export default function Footer() {
 
     return (
         <footer className={styles.footer}>
-            <div className={styles.footerTop}>
-                <div className={styles.footerLogo}>
-                    <h2>URBANS</h2>
-                    <p>EST. 2024</p>
-                </div>
-                <div className={styles.footerLinks}>
-                    <div className={styles.linkColumn}>
-                        <h4>SHOP</h4>
-                        <Link href="#">Men</Link>
-                        <Link href="#">Women</Link>
-                        <Link href="#">New Arrivals</Link>
-                        <Link href="#">Accessories</Link>
-                    </div>
-                    <div className={styles.linkColumn}>
-                        <h4>SUPPORT</h4>
-                        <Link href="#">FAQ</Link>
-                        <Link href="#">Shipping</Link>
-                        <Link href="#">Returns</Link>
-                        <Link href="/contact">Contact</Link>
-                    </div>
-                    <div className={styles.linkColumn}>
-                        <h4>LEGAL</h4>
-                        <Link href="#">Privacy</Link>
-                        <Link href="#">Terms</Link>
-                        <Link href="#">Accessibility</Link>
-                    </div>
-                </div>
-            </div>
-
             {/* Newsletter Section */}
-            <div className={styles.newsletterSection}>
+            <div className={styles.newsletterSection} style={{ marginBottom: '4rem', paddingBottom: '4rem', borderBottom: '1px solid var(--border)' }}>
                 <div className={styles.newsletterContent}>
                     <div className={styles.newsletterLeft}>
                         <h3>STAY IN THE LOOP</h3>
@@ -70,6 +41,33 @@ export default function Footer() {
                                 </>
                             )}
                         </div>
+                    </div>
+                </div>
+            </div>
+
+            <div className={styles.footerTop}>
+                <div className={styles.footerLogo}>
+                    <h2>URBANS</h2>
+                    <p>EST. 2024</p>
+                </div>
+                <div className={styles.footerLinks}>
+                    <div className={styles.linkColumn}>
+                        <h4>SHOP</h4>
+                        <Link href="/men">Men</Link>
+                        <Link href="/women">Women</Link>
+                        <Link href="/men#accessories">Accessories</Link>
+                    </div>
+                    <div className={styles.linkColumn}>
+                        <h4>SUPPORT</h4>
+                        <Link href="/contact">FAQ</Link>
+                        <Link href="/shipping">Shipping</Link>
+                        <Link href="/returns">Returns</Link>
+                        <Link href="/contact">Contact</Link>
+                    </div>
+                    <div className={styles.linkColumn}>
+                        <h4>LEGAL</h4>
+                        <Link href="/privacy">Privacy Policy</Link>
+                        <Link href="/terms">Terms of Service</Link>
                     </div>
                 </div>
             </div>
