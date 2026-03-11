@@ -4,7 +4,7 @@ const STRAPI_URL = process.env.NEXT_PUBLIC_STRAPI_API_URL || 'http://127.0.0.1:1
 
 export async function fetchFromStrapi(path: string, options: RequestInit = {}) {
     try {
-        const url = new URL(\`/api\${path}\`, STRAPI_URL);
+        const url = new URL(`/api${path}`, STRAPI_URL);
     
     const response = await fetch(url.toString(), {
       ...options,
@@ -17,7 +17,7 @@ export async function fetchFromStrapi(path: string, options: RequestInit = {}) {
     });
 
     if (!response.ok) {
-      console.warn(\`Failed to fetch from Strapi: \${response.statusText}\`);
+      console.warn(`Failed to fetch from Strapi: ${response.statusText}`);
       return null;
     }
 
