@@ -7,7 +7,7 @@ const JWT_SECRET = new TextEncoder().encode(
     process.env.JWT_SECRET || 'urbans-secret-key-1234567890-super-safe'
 );
 
-export async function middleware(request: NextRequest) {
+export async function proxy(request: NextRequest) {
     const token = request.cookies.get('urbans_token')?.value;
     const { pathname } = request.nextUrl;
 
