@@ -29,3 +29,9 @@ For a scalable "big brand" experience, we recommend using a dedicated cloud stor
 
 ## Database (Neon)
 - Use Neon for storing structured data: User profiles, Product details (title, price, description, *image_url*), Orders, and Inventory.
+
+
+
+
+
+done for today
