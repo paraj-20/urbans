@@ -9,25 +9,23 @@
  * - Works in Node.js, Edge runtime, and browser environments
  */
 
-import { neon, neonConfig } from '@neondatabase/serverless';
-
-// Disable WebSocket for pure HTTP mode - better for serverless cold starts
-// and avoids any TCP-level DNS issues
-neonConfig.fetchConnectionCache = true;
-
-// Validate the DATABASE_URL is present at startup
-if (!process.env.DATABASE_URL) {
-    throw new Error(
-        '[neon.ts] DATABASE_URL is not set. ' +
-        'Add it to your .env.local file as: DATABASE_URL="postgresql://..."'
-    );
-}
+import { neon } from '@neondatabase/serverless';
 
 /**
- * `sql` is a tagged-template SQL executor.
- * Usage: await sql`SELECT * FROM users WHERE email = ${email}`
- *
- * It is safe against SQL injection (values are parameterised automatically).
- * It returns rows as an array of typed objects.
+ * `sql` is a tagged-template SQL executor using lazy evaluation.
+ * 
+ * WHY: During `next build` on Vercel, setting up clients at the top level 
+ * crashes module collection if DATABASE_URL is not set. Wrapping it prevents 
+ * build-time crashes and defers verification to runtime execution.
  */
-export const sql = neon(process.env.DATABASE_URL);
+export const sql = (strings: TemplateStringsArray, ...values: any[]) => {
+    if (!process.env.DATABASE_URL) {
+        throw new Error(
+            '[neon.ts] DATABASE_URL is not set. ' +
+            'Please configure it in your Vercel/environment settings.'
+        );
+    }
+    const client = neon(process.env.DATABASE_URL);
+    return client(strings, ...values);
+};
+
