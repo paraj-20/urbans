@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect, useRef } from 'react';
+import Image from 'next/image';
 import styles from './story.module.css';
 
 export default function OurStory() {
@@ -78,9 +79,12 @@ export default function OurStory() {
                         </div>
                     </div>
                     <div className={styles.philosophyImage}>
-                        <img
+                        <Image
                             src="https://images.unsplash.com/photo-1504198458649-3128b932f49e?q=80&w=800&auto=format&fit=crop"
                             alt="Design Philosophy"
+                            width={800}
+                            height={600}
+                            className={styles.image}
                         />
                     </div>
                 </div>
@@ -115,7 +119,7 @@ export default function OurStory() {
                 <div className={styles.gallery}>
                     {galleryImages.map((img, idx) => (
                         <div key={idx} className={styles.galleryItem}>
-                            <img src={img.src} alt={img.caption} />
+                            <Image src={img.src} alt={img.caption} width={800} height={800} className={styles.image} />
                             <div className={styles.galleryCaption}>{img.caption}</div>
                         </div>
                     ))}

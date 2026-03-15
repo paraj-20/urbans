@@ -196,8 +196,31 @@ export default function Navbar() {
                     <Link href="/blogs" onClick={toggleMenu}>BLOGS</Link>
                     <Link href="/contact" onClick={toggleMenu}>CONTACT US</Link>
                     <div className={styles.mobileAuth}>
-                        <button className={styles.loginBtn}>LOGIN</button>
-                        <button className={styles.iconBtn}>ACCOUNT</button>
+                        {user ? (
+                            <>
+                                <Link 
+                                    href="/settings" 
+                                    className={styles.loginBtn} 
+                                    onClick={() => setIsMenuOpen(false)}
+                                >
+                                    SETTINGS
+                                </Link>
+                                <button 
+                                    className={styles.userDropdownBtn} 
+                                    onClick={handleLogout}
+                                >
+                                    LOGOUT
+                                </button>
+                            </>
+                        ) : (
+                            <Link 
+                                href="/login" 
+                                className={styles.loginBtn} 
+                                onClick={() => setIsMenuOpen(false)}
+                            >
+                                LOGIN
+                            </Link>
+                        )}
                     </div>
                 </div>
             </div>

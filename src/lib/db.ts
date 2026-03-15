@@ -43,17 +43,15 @@ function capitalizeWords(str: string) {
     return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
-function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', section: 'clothing' | 'accessories', subcategory: string): Product[] {
+export async function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', section: 'clothing' | 'accessories', subcategory: string): Promise<Product[]> {
     const products: Product[] = [];
-    // Constructs the local path to /public/products/men/clothing/shirts, etc.
     const dirPath = path.join(process.cwd(), 'public', 'products', category.toLowerCase(), section, subcategory.toLowerCase());
 
     try {
         if (fs.existsSync(dirPath)) {
-            const files = fs.readdirSync(dirPath);
+            const files = await fs.promises.readdir(dirPath);
             let counter = 1;
             for (const file of files) {
-                // Only match image files
                 if (file.match(/\.(jpg|jpeg|png|webp|avif|gif)$/i)) {
                     const hash = stringToHash(file);
                     products.push({
@@ -75,13 +73,13 @@ function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', section: 'clothing'
     return products;
 }
 
-function scanTrending(category: 'MEN' | 'WOMEN'): Product[] {
+export async function scanTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]> {
     const products: Product[] = [];
     const dirPath = path.join(process.cwd(), 'public', 'products', category.toLowerCase(), 'trending');
 
     try {
         if (fs.existsSync(dirPath)) {
-            const files = fs.readdirSync(dirPath);
+            const files = await fs.promises.readdir(dirPath);
             let counter = 1;
             for (const file of files) {
                 if (file.match(/\.(jpg|jpeg|png|webp|avif|gif)$/i)) {
@@ -89,7 +87,7 @@ function scanTrending(category: 'MEN' | 'WOMEN'): Product[] {
                     products.push({
                         id: `${category}-trending-${file}`,
                         name: `Trending ${capitalizeWords(category.toLowerCase())} ${counter}`,
-                        price: 60 + (hash % 60), // Trending has broad price ranges
+                        price: 60 + (hash % 60), 
                         imageUrl: `/products/${category.toLowerCase()}/trending/${file}`,
                         category,
                         subcategory: 'trending',
@@ -114,7 +112,7 @@ export async function fetchProductsByCategory(category: 'MEN' | 'WOMEN', limit?:
     let allProducts: Product[] = [];
     for (const sec of sections) {
         for (const sub of sec.subs) {
-            allProducts = allProducts.concat(scanDirectoryForProducts(category, sec.section, sub));
+            allProducts = allProducts.concat(await scanDirectoryForProducts(category, sec.section, sub));
         }
     }
 
@@ -126,12 +124,12 @@ export async function fetchProductsBySection(category: 'MEN' | 'WOMEN', subcateg
 
     for (const sub of subcategories) {
         const section = ['caps', 'backpacks'].includes(sub.toLowerCase()) ? 'accessories' : 'clothing';
-        allProducts = allProducts.concat(scanDirectoryForProducts(category, section as any, sub));
+        allProducts = allProducts.concat(await scanDirectoryForProducts(category, section as any, sub));
     }
 
     return limit ? allProducts.slice(0, limit) : allProducts;
 }
 
 export async function fetchTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]> {
-    return scanTrending(category);
+    return await scanTrending(category);
 }

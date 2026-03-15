@@ -18,10 +18,10 @@ export default function Home() {
           </h1>
 
           <div className={styles.heroFooter} style={{ marginTop: 0 }}>
-            <button className={styles.viewBtn}>
+            <Link href="/men" className={styles.viewBtn}>
               VIEW COLLECTION
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
-            </button>
+            </Link>
             <p className={styles.heroDesc}>
               Crafted for the rhythm of the city. Sharp silhouettes, elevated essentials, and unapologetic confidence.
             </p>
@@ -97,7 +97,7 @@ export default function Home() {
             of utility and luxury. Every thread is selected for durability, every cut
             made for movement. We don't just sell clothes; we architect your daily armor.
           </p>
-          <button className={styles.readStoryBtn}>OUR STORY</button>
+          <Link href="/our-story" className={styles.readStoryBtn}>OUR STORY</Link>
         </div>
       </section>
     </div>

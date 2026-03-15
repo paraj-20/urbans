@@ -1,4 +1,4 @@
-
+import Image from 'next/image';
 import styles from './about.module.css';
 
 export default function About() {
@@ -66,7 +66,7 @@ export default function About() {
                     ].map((member) => (
                         <div key={member.name} className={styles.memberCard}>
                             <div className={styles.memberImage}>
-                                <img src={member.img} alt={member.name} />
+                                <Image src={member.img} alt={member.name} width={300} height={300} className={styles.image} />
                                 <div className={styles.socialOverlay}>
                                     <span>LINKEDIN</span>
                                 </div>

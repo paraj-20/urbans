@@ -1,32 +1,69 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { pool } from '@/lib/neon';
+import { sql } from '@/lib/neon';
 import { signToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
     try {
-        const { name, email, password } = await req.json();
+        const body = await req.json();
+        const { name, email, password } = body;
 
         if (!name || !email || !password) {
-            return NextResponse.json({ error: 'All fields are required' }, { status: 400 });
+            return NextResponse.json(
+                { error: 'All fields are required' },
+                { status: 400 }
+            );
         }
 
-        const { rows: existingUser } = await pool.query('SELECT id FROM users WHERE email = $1', [email]);
-        if (existingUser.length > 0) {
-            return NextResponse.json({ error: 'Email already exists' }, { status: 409 });
+        // Validate email format
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(email)) {
+            return NextResponse.json(
+                { error: 'Please enter a valid email address' },
+                { status: 400 }
+            );
         }
 
-        const salt = await bcrypt.genSalt(10);
-        const hash = await bcrypt.hash(password, salt);
+        if (password.length < 6) {
+            return NextResponse.json(
+                { error: 'Password must be at least 6 characters' },
+                { status: 400 }
+            );
+        }
 
-        const { rows: newUser } = await pool.query(
-            'INSERT INTO users (name, email, password_hash) VALUES ($1, $2, $3) RETURNING id, name, email',
-            [name, email, hash]
-        );
+        // Check if user already exists
+        const existingUsers = await sql`
+            SELECT id FROM users WHERE email = ${email.toLowerCase().trim()} LIMIT 1
+        `;
 
-        const token = await signToken({ id: newUser[0].id, name: newUser[0].name, email: newUser[0].email });
+        if (existingUsers.length > 0) {
+            return NextResponse.json(
+                { error: 'An account with this email already exists' },
+                { status: 409 }
+            );
+        }
 
+        // Hash password with bcrypt (cost factor 12 for production security)
+        const passwordHash = await bcrypt.hash(password, 12);
+
+        // Insert new user
+        const newUsers = await sql`
+            INSERT INTO users (name, email, password_hash)
+            VALUES (${name.trim()}, ${email.toLowerCase().trim()}, ${passwordHash})
+            RETURNING id, name, email
+        `;
+
+        const newUser = newUsers[0];
+
+        // Generate JWT token
+        const token = await signToken({
+            id: newUser.id,
+            name: newUser.name,
+            email: newUser.email,
+        });
+
+        // Set HttpOnly auth cookie
         const cookieStore = await cookies();
         cookieStore.set('urbans_token', token, {
             httpOnly: true,
@@ -36,9 +73,32 @@ export async function POST(req: Request) {
             maxAge: 7 * 24 * 60 * 60, // 7 days
         });
 
-        return NextResponse.json({ message: 'User created successfully', user: newUser[0] }, { status: 201 });
-    } catch (error) {
-        console.error('Signup error:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json(
+            {
+                message: 'Account created successfully',
+                user: { id: newUser.id, name: newUser.name, email: newUser.email },
+            },
+            { status: 201 }
+        );
+    } catch (error: any) {
+        // Log the real error for debugging (visible in Next.js terminal / Vercel logs)
+        console.error('[signup] Error:', {
+            message: error?.message ?? 'Unknown error',
+            code: error?.code,
+            detail: error?.detail,
+        });
+
+        // Surface DB constraint errors as user-friendly messages
+        if (error?.code === '23505') {
+            return NextResponse.json(
+                { error: 'An account with this email already exists' },
+                { status: 409 }
+            );
+        }
+
+        return NextResponse.json(
+            { error: 'Something went wrong. Please try again.' },
+            { status: 500 }
+        );
     }
 }

@@ -1,29 +1,56 @@
 import { NextResponse } from 'next/server';
 import bcrypt from 'bcryptjs';
-import { pool } from '@/lib/neon';
+import { sql } from '@/lib/neon';
 import { signToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
 
 export async function POST(req: Request) {
     try {
-        const { email, password } = await req.json();
+        const body = await req.json();
+        const { email, password } = body;
 
         if (!email || !password) {
-            return NextResponse.json({ error: 'Email and password are required' }, { status: 400 });
+            return NextResponse.json(
+                { error: 'Email and password are required' },
+                { status: 400 }
+            );
         }
 
-        const { rows: user } = await pool.query('SELECT id, name, email, password_hash FROM users WHERE email = $1', [email]);
-        if (user.length === 0) {
-            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+        // Fetch user (normalise email to lowercase)
+        const users = await sql`
+            SELECT id, name, email, password_hash
+            FROM users
+            WHERE email = ${email.toLowerCase().trim()}
+            LIMIT 1
+        `;
+
+        if (users.length === 0) {
+            // Generic message to prevent email enumeration attacks
+            return NextResponse.json(
+                { error: 'Invalid email or password' },
+                { status: 401 }
+            );
         }
 
-        const isMatch = await bcrypt.compare(password, user[0].password_hash);
+        const user = users[0];
+
+        // Verify password
+        const isMatch = await bcrypt.compare(password, user.password_hash);
         if (!isMatch) {
-            return NextResponse.json({ error: 'Invalid credentials' }, { status: 401 });
+            return NextResponse.json(
+                { error: 'Invalid email or password' },
+                { status: 401 }
+            );
         }
 
-        const token = await signToken({ id: user[0].id, name: user[0].name, email: user[0].email });
+        // Generate JWT token
+        const token = await signToken({
+            id: user.id,
+            name: user.name,
+            email: user.email,
+        });
 
+        // Set HttpOnly auth cookie
         const cookieStore = await cookies();
         cookieStore.set('urbans_token', token, {
             httpOnly: true,
@@ -33,9 +60,19 @@ export async function POST(req: Request) {
             maxAge: 7 * 24 * 60 * 60, // 7 days
         });
 
-        return NextResponse.json({ message: 'Logged in successfully', user: { id: user[0].id, name: user[0].name, email: user[0].email } });
-    } catch (error) {
-        console.error('Login error:', error);
-        return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 });
+        return NextResponse.json({
+            message: 'Logged in successfully',
+            user: { id: user.id, name: user.name, email: user.email },
+        });
+    } catch (error: any) {
+        console.error('[login] Error:', {
+            message: error?.message ?? 'Unknown error',
+            code: error?.code,
+        });
+
+        return NextResponse.json(
+            { error: 'Something went wrong. Please try again.' },
+            { status: 500 }
+        );
     }
 }
