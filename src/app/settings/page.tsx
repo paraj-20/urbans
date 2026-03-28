@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useAuth } from '@/context/AuthContext';
 import { useRouter } from 'next/navigation';
 import styles from '@/components/auth.module.css';
@@ -13,10 +13,13 @@ export default function SettingsPage() {
     const [msg, setMsg] = useState({ text: '', type: '' });
     const router = useRouter();
 
-    if (!user) {
-        if (typeof window !== 'undefined') router.push('/login');
-        return null;
-    }
+    useEffect(() => {
+        if (!user && typeof window !== 'undefined') {
+            router.push('/login');
+        }
+    }, [user, router]);
+
+    if (!user) return null;
 
     const handleUpdate = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -90,7 +93,7 @@ export default function SettingsPage() {
                             id="password"
                             value={password}
                             onChange={(e) => setPassword(e.target.value)}
-                            placeholder="Leave blank to keep unchanged"
+                            placeholder="Set a password to enable manual login, or leave blank"
                         />
                     </div>
 

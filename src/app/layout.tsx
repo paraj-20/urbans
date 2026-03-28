@@ -17,6 +17,7 @@ const geistMono = Geist_Mono({
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
 import CartDrawer from "@/components/CartDrawer";
+import GoogleProvider from "@/components/GoogleProvider";
 
 export const metadata: Metadata = {
   metadataBase: new URL('https://urbans-clothing.vercel.app'), // Update with actual URL
@@ -67,12 +68,14 @@ export default function RootLayout({
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
         <AuthProvider>
           <CartProvider>
-            <Navbar />
-            <CartDrawer />
-            <main style={{ minHeight: 'calc(100vh - 400px)' }}>
-              {children}
-            </main>
-            <Footer />
+            <GoogleProvider>
+              <Navbar />
+              <CartDrawer />
+              <main style={{ minHeight: 'calc(100vh - 400px)' }}>
+                {children}
+              </main>
+              <Footer />
+            </GoogleProvider>
           </CartProvider>
         </AuthProvider>
       </body>

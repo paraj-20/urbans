@@ -47,10 +47,10 @@ export async function POST(req: Request) {
         // Hash password with bcrypt (cost factor 12 for production security)
         const passwordHash = await bcrypt.hash(password, 12);
 
-        // Insert new user
+        // Insert new user with explicit provider tag
         const newUsers = await sql`
-            INSERT INTO users (name, email, password_hash)
-            VALUES (${name.trim()}, ${email.toLowerCase().trim()}, ${passwordHash})
+            INSERT INTO users (name, email, password_hash, provider)
+            VALUES (${name.trim()}, ${email.toLowerCase().trim()}, ${passwordHash}, 'credentials')
             RETURNING id, name, email
         `;
 

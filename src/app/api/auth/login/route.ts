@@ -18,7 +18,7 @@ export async function POST(req: Request) {
 
         // Fetch user (normalise email to lowercase)
         const users = await sql`
-            SELECT id, name, email, password_hash
+            SELECT id, name, email, password_hash, provider
             FROM users
             WHERE email = ${email.toLowerCase().trim()}
             LIMIT 1
@@ -33,6 +33,14 @@ export async function POST(req: Request) {
         }
 
         const user = users[0];
+
+        // Ensure purely credential users
+        if (user.provider === 'google') {
+            return NextResponse.json(
+                { error: 'This account uses Google Sign-In. Please use the Google button to log in.' },
+                { status: 400 }
+            );
+        }
 
         // Verify password
         const isMatch = await bcrypt.compare(password, user.password_hash);
