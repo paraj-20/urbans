@@ -27,11 +27,11 @@ export async function POST(req: Request) {
 
         const options = {
             amount: amountInCents,
-            currency: 'USD',
-            receipt: `rcptid_${user.id}_${Date.now()}`,
+            currency: 'INR',
+            receipt: `rcptid_${String(user.id).substring(0, 10)}_${Date.now()}`,
             notes: {
-                userId: String(user.id),
-                email: String(user.email),
+                userId: String(user.id).substring(0, 40),
+                email: String(user.email).substring(0, 40),
             }
         };
 
@@ -51,6 +51,10 @@ export async function POST(req: Request) {
 
     } catch (error: any) {
         console.error('Error creating Razorpay order:', error);
-        return NextResponse.json({ error: error.message || 'Internal Server Error' }, { status: 500 });
+        
+        // Razorpay SDK throws a plain object like { statusCode, error: { description } }
+        const errorMessage = error?.error?.description || error?.message || 'Internal Server Error';
+        
+        return NextResponse.json({ error: errorMessage }, { status: 500 });
     }
 }
