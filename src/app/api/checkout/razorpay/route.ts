@@ -33,8 +33,8 @@ export async function POST(req: Request) {
             currency: 'USD',
             receipt: `rcptid_${user.id}_${Date.now()}`,
             notes: {
-                userId: user.id,
-                email: user.email,
+                userId: String(user.id),
+                email: String(user.email),
             }
         };
 
