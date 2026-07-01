@@ -3,8 +3,6 @@ import { OAuth2Client } from 'google-auth-library';
 import { sql } from '@/lib/neon';
 import { signToken } from '@/lib/auth';
 import { cookies } from 'next/headers';
-import bcrypt from 'bcryptjs';
-
 const client = new OAuth2Client(process.env.NEXT_PUBLIC_GOOGLE_CLIENT_ID);
 
 export async function POST(req: Request) {
@@ -48,9 +46,9 @@ export async function POST(req: Request) {
             }
         } else {
             // Create user
-            // We generate a long, random password hash since they won't use it directly
-            const randomPassword = Math.random().toString(36).slice(-8) + Math.random().toString(36).slice(-8);
-            const passwordHash = await bcrypt.hash(randomPassword, 12);
+            // We use a dummy password hash since Google users don't use passwords.
+            // This avoids an unnecessary, expensive bcrypt hashing operation.
+            const passwordHash = '[GOOGLE_AUTH_NO_PASSWORD]';
             
             const newUsers = await sql`
                 INSERT INTO users (name, email, password_hash, provider)

@@ -1,6 +1,7 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import Script from 'next/script';
 import { useAuth } from '@/context/AuthContext';
 import { useCart } from '@/context/CartContext';
 import { useRouter } from 'next/navigation';
@@ -11,10 +12,6 @@ export default function CheckoutPage() {
     const { user, isLoading } = useAuth();
     const { items, cartTotal, clearCart } = useCart();
     const router = useRouter();
-
-    const [cardNumber, setCardNumber] = useState('4242424242424242');
-    const [expiry, setExpiry] = useState('12/28');
-    const [cvc, setCvc] = useState('123');
 
     const [status, setStatus] = useState<'' | 'processing' | 'success'>('');
     const [error, setError] = useState('');
@@ -43,22 +40,52 @@ export default function CheckoutPage() {
         setStatus('processing');
 
         try {
-            const res = await fetch('/api/checkout', {
+            // 1. Create order on our backend
+            const res = await fetch('/api/checkout/razorpay', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     items,
                     total: cartTotal,
-                    cardDetails: { number: cardNumber, expiry, cvc }
                 }),
             });
 
             const data = await res.json();
-            if (!res.ok) throw new Error(data.error || 'Payment failed');
+            if (!res.ok) throw new Error(data.error || 'Payment initialization failed');
 
-            setStatus('success');
-            setReceipt(data);
-            clearCart();
+            // 2. Initialize Razorpay Checkout
+            const options = {
+                key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
+                amount: data.amount, // Amount is in currency subunits.
+                currency: data.currency,
+                name: "URBANS Store",
+                description: "Test Transaction",
+                order_id: data.orderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
+                handler: function (response: any) {
+                    // Payment successful
+                    console.log("Payment successful", response);
+                    setStatus('success');
+                    setReceipt({ orderId: data.orderId, receipt: { items, total: cartTotal } });
+                    clearCart();
+                },
+                prefill: {
+                    name: user?.name || "Customer",
+                    email: user?.email || "customer@example.com",
+                },
+                theme: {
+                    color: "#00ff94"
+                }
+            };
+            
+            // @ts-ignore
+            const rzp1 = new window.Razorpay(options);
+            rzp1.on('payment.failed', function (response: any) {
+                console.error(response.error);
+                setError(response.error.description || 'Payment Failed');
+                setStatus('');
+            });
+            rzp1.open();
+
         } catch (err: any) {
             setError(err.message);
             setStatus('');
@@ -98,6 +125,7 @@ export default function CheckoutPage() {
 
     return (
         <div className={styles.container} style={{ alignItems: 'flex-start', paddingTop: '4rem' }}>
+            <Script src="https://checkout.razorpay.com/v1/checkout.js" strategy="lazyOnload" />
             <div style={{ display: 'flex', flexWrap: 'wrap', gap: '2rem', width: '100%', maxWidth: '1000px', margin: '0 auto' }}>
 
                 {/* Payment Form Left */}
@@ -113,22 +141,6 @@ export default function CheckoutPage() {
                         <div className={styles.inputGroup}>
                             <label>Email</label>
                             <input type="email" value={user.email} disabled style={{ opacity: 0.5 }} />
-                        </div>
-
-                        <div className={styles.inputGroup}>
-                            <label>Card Number (Demo)</label>
-                            <input type="text" value={cardNumber} onChange={(e) => setCardNumber(e.target.value)} required />
-                        </div>
-
-                        <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0, 1fr) minmax(0, 1fr)', gap: '1rem' }}>
-                            <div className={styles.inputGroup}>
-                                <label>Expiry</label>
-                                <input type="text" value={expiry} onChange={(e) => setExpiry(e.target.value)} required />
-                            </div>
-                            <div className={styles.inputGroup}>
-                                <label>CVC</label>
-                                <input type="text" value={cvc} onChange={(e) => setCvc(e.target.value)} required />
-                            </div>
                         </div>
 
                         <button type="submit" className={styles.submitBtn} disabled={status === 'processing'}>
