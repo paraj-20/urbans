@@ -52,6 +52,12 @@ export default function Footer() {
                 </div>
                 <div className={styles.footerLinks}>
                     <div className={styles.linkColumn}>
+                        <h4>BRAND</h4>
+                        <Link href="/about">About Us</Link>
+                        <Link href="/our-story">Our Story</Link>
+                        <Link href="/blogs">Blogs</Link>
+                    </div>
+                    <div className={styles.linkColumn}>
                         <h4>SHOP</h4>
                         <Link href="/men">Men</Link>
                         <Link href="/women">Women</Link>

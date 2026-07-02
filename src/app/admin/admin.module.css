@@ -1,0 +1,101 @@
+.container {
+  padding: 8rem 2rem 4rem;
+  max-width: 1200px;
+  margin: 0 auto;
+  color: white;
+}
+
+.title {
+  font-size: 2.5rem;
+  margin-bottom: 2rem;
+  letter-spacing: -0.02em;
+}
+
+.addForm {
+  background: rgba(255, 255, 255, 0.05);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 3rem;
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+}
+
+.addForm input, .addForm select {
+  padding: 0.8rem;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  border-radius: 4px;
+}
+
+.addForm input::placeholder {
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.submitBtn {
+  background: var(--accent);
+  color: black;
+  font-weight: bold;
+  border: none;
+  cursor: pointer;
+  padding: 0.8rem;
+  border-radius: 4px;
+}
+
+.productList {
+  display: grid;
+  gap: 1rem;
+}
+
+.productRow {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px 100px 100px 100px;
+  gap: 1rem;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.03);
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255,255,255,0.05);
+}
+
+.productImage {
+  width: 60px;
+  height: 80px;
+  object-fit: cover;
+  border-radius: 4px;
+}
+
+.editInput {
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  color: white;
+  padding: 0.5rem;
+  border-radius: 4px;
+  width: 100%;
+}
+
+.deleteBtn {
+  background: transparent;
+  color: #ff4444;
+  border: 1px solid #ff4444;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.deleteBtn:hover {
+    background: #ff4444;
+    color: white;
+}
+
+.saveBtn {
+  background: var(--accent);
+  color: black;
+  border: none;
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+}

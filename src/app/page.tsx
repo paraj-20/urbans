@@ -8,23 +8,22 @@ export default function Home() {
       {/* Hero Section */}
       <section className={styles.hero}>
         <div className={styles.heroContent}>
-          <div style={{ height: "15vh" }}></div>
           <div className={styles.springTag}>THE RISE</div>
-          <h1 className={styles.heroTitle} style={{ marginBottom: "0.5rem" }}>
-            URBANS:<br />
+          <h1 className={styles.heroTitle}>
             <span className={styles.titleLine}>
               <span>BUILT FOR THE BOLD</span>
             </span>
           </h1>
 
-          <div className={styles.heroFooter} style={{ marginTop: 0 }}>
+          <p className={styles.heroDesc}>
+            Crafted for the rhythm of the city. Sharp silhouettes,<br /> elevated essentials, and unapologetic confidence.
+          </p>
+
+          <div className={styles.heroFooter}>
             <Link href="/men" className={styles.viewBtn}>
               VIEW COLLECTION
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
             </Link>
-            <p className={styles.heroDesc}>
-              Crafted for the rhythm of the city. Sharp silhouettes, elevated essentials, and unapologetic confidence.
-            </p>
           </div>
         </div>
 
@@ -59,8 +58,8 @@ export default function Home() {
       <section className={styles.productLines}>
         <div className={styles.tickerWrapper}>
           <div className={styles.ticker}>
-            <span>URBANS ESSENTIALS — PREMIUM COTTON — CONSTRUCTED DENIM — HEADWEAR — </span>
-            <span>URBANS ESSENTIALS — PREMIUM COTTON — CONSTRUCTED DENIM — HEADWEAR — </span>
+            <span>AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ </span>
+            <span>AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ AESTHETIC T-SHIRTS ➤ OVERSIZED SHIRTS ➤ PREMIUM DENIM ➤ CAPS & ACCESSORIES ➤ </span>
           </div>
         </div>
 
@@ -90,8 +89,12 @@ export default function Home() {
 
       {/* Brand Statement / About */}
       <section className={styles.brandStatement}>
+        <div className={styles.geometricShape1}></div>
+        <div className={styles.geometricShape2}></div>
+        <div className={styles.geometricShape3}></div>
+        
         <div className={styles.statementContent}>
-          <h2>WE BUILD UNIFORMS FOR THE <br /> <span className={styles.accentText}>CITY THAT NEVER SLEEPS</span></h2>
+          <h2>WE BUILD UNIFORMS FOR THE <br /> CITY THAT NEVER SLEEPS</h2>
           <p>
             Born in the streets, refined in the studio. URBANS represents the intersection
             of utility and luxury. Every thread is selected for durability, every cut

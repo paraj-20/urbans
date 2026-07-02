@@ -145,13 +145,6 @@ export default function Navbar() {
                                 </ul>
                             </div>
                         ))}
-                        {/* Optional Visual Column for aesthetics */}
-                        <div className={styles.megaMenuVisual}>
-                            <div className={styles.visualText}>
-                                NEW ARRIVALS <br />
-                                <span className={styles.accentText}>FW26 COLLECTION</span>
-                            </div>
-                        </div>
                     </div>
                 )}
             </div>

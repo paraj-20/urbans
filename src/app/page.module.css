@@ -166,13 +166,13 @@
 
 .heroContent {
   flex: 1;
-  padding: 0 3rem;
+  padding: 0 5rem;
   display: flex;
   flex-direction: column;
   justify-content: center;
   z-index: 2;
   position: relative;
-  max-width: 50%;
+  max-width: 55%;
 }
 
 /* Cinematic Background Animation */
@@ -229,21 +229,35 @@
 
 .springTag {
   color: var(--accent);
-  font-size: 0.7rem;
-  letter-spacing: 0.3em;
-  font-weight: 700;
-  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  letter-spacing: 0.4em;
+  font-weight: 800;
+  margin-bottom: 1.5rem;
   text-shadow: 0 0 10px rgba(0, 255, 148, 0.3);
   opacity: 0;
   animation: slideUpFade 0.8s ease-out 0.2s forwards;
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.springTag::before {
+  content: '';
+  display: inline-block;
+  width: 40px;
+  height: 3px;
+  background-color: var(--accent);
 }
 
 .heroTitle {
-  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-size: clamp(2rem, 4vw, 5.5rem);
   line-height: 0.95;
-  margin-bottom: 1rem;
+  margin-bottom: 2rem;
   display: flex;
   flex-direction: column;
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  white-space: nowrap;
 }
 
 .titleLine {
@@ -280,7 +294,7 @@
 .italicText {
   font-style: italic;
   font-weight: 400;
-  font-family: serif;
+  font-family: var(--font-geist-mono), monospace;
   color: #fff;
   display: inline-block;
   /* Override subtle rotate animation for emphasis */
@@ -290,9 +304,9 @@
 }
 
 .heroFooter {
-  margin-top: 2rem;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
+  align-items: center;
   gap: 1.5rem;
   opacity: 0;
   animation: slideUpFade 0.8s ease-out 1.2s forwards;
@@ -319,13 +333,17 @@
 }
 
 .heroDesc {
-  max-width: 380px;
-  font-size: 0.8rem;
-  color: #ccc;
-  line-height: 1.5;
-  border-left: 2px solid var(--accent);
-  padding-left: 1rem;
+  max-width: 700px;
+  font-size: 1.1rem;
+  font-weight: 800;
+  color: #ddd;
+  line-height: 1.6;
+  border-left: 3px solid var(--accent);
+  padding-left: 1.5rem;
   backdrop-filter: blur(5px);
+  margin-bottom: 3rem;
+  opacity: 0;
+  animation: slideUpFade 0.8s ease-out 0.8s forwards;
 }
 
 /* Categories */
@@ -420,7 +438,8 @@
 }
 
 .ticker {
-  display: inline-block;
+  display: flex;
+  width: max-content;
   animation: scroll 20s linear infinite;
 }
 
@@ -456,19 +475,19 @@
 }
 
 .lineItem:nth-child(1) .lineImage {
-  background-image: url('https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?q=80&w=500&auto=format&fit=crop');
+  background-image: url('/images/product-lines/tshirts.jpg');
 }
 
 .lineItem:nth-child(2) .lineImage {
-  background-image: url('https://images.unsplash.com/photo-1596755094514-f87e34085b2c?q=80&w=500&auto=format&fit=crop');
+  background-image: url('/images/product-lines/shirts.jpg');
 }
 
 .lineItem:nth-child(3) .lineImage {
-  background-image: url('https://images.unsplash.com/photo-1582552938357-32b906df40cb?q=80&w=500&auto=format&fit=crop');
+  background-image: url('/images/product-lines/denim.jpg');
 }
 
 .lineItem:nth-child(4) .lineImage {
-  background-image: url('https://images.unsplash.com/photo-1576871337622-98d48d1cf531?q=80&w=500&auto=format&fit=crop');
+  background-image: url('/images/product-lines/accessories.jpg');
 }
 
 
@@ -488,28 +507,118 @@
 
 /* Brand Statement */
 .brandStatement {
-  padding: 8rem 4rem;
+  padding: 10rem 4rem;
   display: flex;
   justify-content: center;
   text-align: center;
+  position: relative;
+  overflow: hidden;
+  background: radial-gradient(circle at center, rgba(0, 255, 148, 0.1) 0%, transparent 60%);
+}
+
+.brandStatement::before {
+  content: '';
+  position: absolute;
+  top: -20%;
+  left: -10%;
+  width: 50vw;
+  height: 50vw;
+  border: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse 10s ease-in-out infinite alternate;
+}
+
+.brandStatement::after {
+  content: '';
+  position: absolute;
+  bottom: -20%;
+  right: -10%;
+  width: 60vw;
+  height: 60vw;
+  border: 2px dashed rgba(255, 255, 255, 0.25);
+  border-radius: 50%;
+  z-index: 0;
+  pointer-events: none;
+  animation: pulse 15s ease-in-out infinite alternate-reverse;
+}
+
+.geometricShape1 {
+  position: absolute;
+  top: 15%;
+  right: 15%;
+  width: 120px;
+  height: 120px;
+  border: 3px solid var(--accent);
+  opacity: 0.8;
+  transform: rotate(45deg);
+  z-index: 0;
+  animation: rotateSlow 25s linear infinite;
+  pointer-events: none;
+  box-shadow: 0 0 20px rgba(0, 255, 148, 0.3);
+}
+
+.geometricShape2 {
+  position: absolute;
+  bottom: 15%;
+  left: 10%;
+  width: 180px;
+  height: 180px;
+  background: repeating-linear-gradient(
+    45deg,
+    transparent,
+    transparent 10px,
+    rgba(255, 255, 255, 0.3) 10px,
+    rgba(255, 255, 255, 0.3) 12px
+  );
+  border-radius: 10px;
+  z-index: 0;
+  pointer-events: none;
+  animation: float 8s ease-in-out infinite;
+}
+
+.geometricShape3 {
+  position: absolute;
+  top: 40%;
+  left: -5%;
+  width: 300px;
+  height: 3px;
+  background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.5), transparent);
+  transform: rotate(35deg);
+  z-index: 0;
+  box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+}
+
+@keyframes rotateSlow {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
+
+@keyframes pulse {
+  0% { transform: scale(1); opacity: 0.5; }
+  100% { transform: scale(1.1); opacity: 1; }
+}
+
+@keyframes float {
+  0% { transform: translateY(0px) rotate(0deg); }
+  50% { transform: translateY(-20px) rotate(5deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
 }
 
 .statementContent {
   max-width: 800px;
+  position: relative;
+  z-index: 1;
 }
 
 .statementContent h2 {
-  font-size: 3rem;
-  line-height: 1.1;
+  font-size: clamp(2rem, 4vw, 3.5rem);
+  line-height: 1.2;
   margin-bottom: 2rem;
 }
 
-.accentText {
-  color: var(--text-muted);
-  /* Creating contrast */
-  -webkit-text-stroke: 1px #fff;
-  color: transparent;
-}
+
 
 .statementContent p {
   font-size: 1.1rem;

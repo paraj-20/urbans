@@ -198,8 +198,9 @@
     -webkit-text-stroke: 1px var(--accent);
     opacity: 0.2;
     position: absolute;
-    top: -2.5rem;
-    right: 2rem;
+    top: -5rem;
+    right: 0;
+    line-height: 1;
     transition: all 0.3s ease;
 }
 
@@ -414,7 +415,8 @@
 
     .year {
         font-size: 3rem;
-        top: -1.5rem;
+        top: -3rem;
+        right: 0;
     }
 
     .galleryItem:nth-child(n) {

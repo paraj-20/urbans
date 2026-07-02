@@ -43,9 +43,23 @@ function capitalizeWords(str: string) {
     return str.split('-').map(word => word.charAt(0).toUpperCase() + word.slice(1)).join(' ');
 }
 
+export async function getCustomProductData(): Promise<Record<string, Partial<Product>>> {
+    const dataPath = path.join(process.cwd(), 'data', 'products.json');
+    try {
+        if (fs.existsSync(dataPath)) {
+            const fileData = await fs.promises.readFile(dataPath, 'utf-8');
+            return JSON.parse(fileData) as Record<string, Partial<Product>>;
+        }
+    } catch (e) {
+        console.error("Error reading products.json", e);
+    }
+    return {};
+}
+
 export async function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', section: 'clothing' | 'accessories', subcategory: string): Promise<Product[]> {
     const products: Product[] = [];
     const dirPath = path.join(process.cwd(), 'public', 'products', category.toLowerCase(), section, subcategory.toLowerCase());
+    const customData = await getCustomProductData();
 
     try {
         if (fs.existsSync(dirPath)) {
@@ -54,14 +68,17 @@ export async function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', sectio
             for (const file of files) {
                 if (file.match(/\.(jpg|jpeg|png|webp|avif|gif)$/i)) {
                     const hash = stringToHash(file);
+                    const id = `${category}-${section}-${subcategory}-${file}`;
+                    const custom = customData[id] || {};
+                    
                     products.push({
-                        id: `${category}-${section}-${subcategory}-${file}`,
-                        name: `${capitalizeWords(category.toLowerCase())} ${capitalizeWords(subcategory.toLowerCase())} ${counter}`,
-                        price: getBasePrice(subcategory, hash),
-                        imageUrl: `/products/${category.toLowerCase()}/${section}/${subcategory.toLowerCase()}/${file}`,
-                        category,
-                        subcategory,
-                        isNew: hash % 3 === 0
+                        id,
+                        name: custom.name || `${capitalizeWords(category.toLowerCase())} ${capitalizeWords(subcategory.toLowerCase())} ${counter}`,
+                        price: custom.price !== undefined ? custom.price : getBasePrice(subcategory, hash),
+                        imageUrl: custom.imageUrl || `/products/${category.toLowerCase()}/${section}/${subcategory.toLowerCase()}/${file}`,
+                        category: custom.category || category,
+                        subcategory: custom.subcategory || subcategory,
+                        isNew: custom.isNew !== undefined ? custom.isNew : hash % 3 === 0
                     });
                     counter++;
                 }
@@ -70,12 +87,21 @@ export async function scanDirectoryForProducts(category: 'MEN' | 'WOMEN', sectio
     } catch (e) {
         console.error(`Error scanning directory ${dirPath}`, e);
     }
+    
+    // Inject fully custom products that do not rely on a scanned image file
+    for (const [id, custom] of Object.entries(customData)) {
+        if (id.startsWith('custom-') && custom.category === category && custom.subcategory === subcategory) {
+            products.push(custom as Product);
+        }
+    }
+    
     return products;
 }
 
 export async function scanTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]> {
     const products: Product[] = [];
     const dirPath = path.join(process.cwd(), 'public', 'products', category.toLowerCase(), 'trending');
+    const customData = await getCustomProductData();
 
     try {
         if (fs.existsSync(dirPath)) {
@@ -84,14 +110,17 @@ export async function scanTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]
             for (const file of files) {
                 if (file.match(/\.(jpg|jpeg|png|webp|avif|gif)$/i)) {
                     const hash = stringToHash(file);
+                    const id = `${category}-trending-${file}`;
+                    const custom = customData[id] || {};
+                    
                     products.push({
-                        id: `${category}-trending-${file}`,
-                        name: `Trending ${capitalizeWords(category.toLowerCase())} ${counter}`,
-                        price: 60 + (hash % 60), 
-                        imageUrl: `/products/${category.toLowerCase()}/trending/${file}`,
-                        category,
-                        subcategory: 'trending',
-                        isNew: true
+                        id,
+                        name: custom.name || `Trending ${capitalizeWords(category.toLowerCase())} ${counter}`,
+                        price: custom.price !== undefined ? custom.price : 60 + (hash % 60), 
+                        imageUrl: custom.imageUrl || `/products/${category.toLowerCase()}/trending/${file}`,
+                        category: custom.category || category,
+                        subcategory: custom.subcategory || 'trending',
+                        isNew: custom.isNew !== undefined ? custom.isNew : true
                     });
                     counter++;
                 }
@@ -100,6 +129,14 @@ export async function scanTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]
     } catch (e) {
         console.error(`Error scanning trending directory ${dirPath}`, e);
     }
+    
+    // Inject fully custom trending products
+    for (const [id, custom] of Object.entries(customData)) {
+        if (id.startsWith('custom-') && custom.category === category && custom.subcategory === 'trending') {
+            products.push(custom as Product);
+        }
+    }
+    
     return products;
 }
 
