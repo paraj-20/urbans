@@ -7,10 +7,12 @@ import styles from './CartDrawer.module.css';
 import Image from 'next/image';
 import { X, Plus, Minus, Trash2 } from 'lucide-react';
 import { useEffect } from 'react';
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function CartDrawer() {
     const { isCartOpen, setIsCartOpen, items, updateQuantity, removeFromCart, cartTotal } = useCart();
     const { user } = useAuth();
+    const { formatPrice } = useCurrency();
     const router = useRouter();
 
     // Prevent background scrolling when cart is open
@@ -52,27 +54,30 @@ export default function CartDrawer() {
                     ) : (
                         <div className={styles.itemsList}>
                             {items.map((item) => (
-                                <div key={item.id} className={styles.cartItem}>
+                                <div key={item.cartItemId || item.id} className={styles.cartItem}>
                                     <div className={styles.itemImage}>
                                         <Image src={item.imageUrl} alt={item.name} fill sizes="100px" style={{ objectFit: 'cover' }} />
                                     </div>
                                     <div className={styles.itemDetails}>
                                         <div className={styles.itemHeader}>
-                                            <h3>{item.name}</h3>
-                                            <p className={styles.itemPrice}>${item.price}</p>
+                                            <div>
+                                                <h3>{item.name}</h3>
+                                                <p className={styles.itemSize}>Size: {item.selectedSize || 'M'}</p>
+                                            </div>
+                                            <p className={styles.itemPrice}>{formatPrice(item.price)}</p>
                                         </div>
 
                                         <div className={styles.actions}>
                                             <div className={styles.quantityCtrl}>
-                                                <button onClick={() => updateQuantity(item.id, item.quantity - 1)}>
+                                                <button onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity - 1)}>
                                                     <Minus size={14} />
                                                 </button>
                                                 <span>{item.quantity}</span>
-                                                <button onClick={() => updateQuantity(item.id, item.quantity + 1)}>
+                                                <button onClick={() => updateQuantity(item.cartItemId || item.id, item.quantity + 1)}>
                                                     <Plus size={14} />
                                                 </button>
                                             </div>
-                                            <button className={styles.removeBtn} onClick={() => removeFromCart(item.id)}>
+                                            <button className={styles.removeBtn} onClick={() => removeFromCart(item.cartItemId || item.id)}>
                                                 <Trash2 size={16} />
                                             </button>
                                         </div>
@@ -87,7 +92,7 @@ export default function CartDrawer() {
                     <div className={styles.footer}>
                         <div className={styles.summaryRow}>
                             <span>SUBTOTAL</span>
-                            <span>${cartTotal.toFixed(2)}</span>
+                            <span>{formatPrice(cartTotal)}</span>
                         </div>
                         <p className={styles.taxesInfo}>Taxes & shipping calculated at checkout.</p>
                         <button className={styles.checkoutBtn} onClick={() => {

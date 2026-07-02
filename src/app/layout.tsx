@@ -16,6 +16,7 @@ const geistMono = Geist_Mono({
 
 import { CartProvider } from "@/context/CartContext";
 import { AuthProvider } from "@/context/AuthContext";
+import { CurrencyProvider } from "@/context/CurrencyContext";
 import CartDrawer from "@/components/CartDrawer";
 import GoogleProvider from "@/components/GoogleProvider";
 
@@ -66,18 +67,20 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${geistSans.variable} ${geistMono.variable}`}>
-        <AuthProvider>
-          <CartProvider>
-            <GoogleProvider>
-              <Navbar />
-              <CartDrawer />
-              <main style={{ minHeight: 'calc(100vh - 400px)' }}>
-                {children}
-              </main>
-              <Footer />
-            </GoogleProvider>
-          </CartProvider>
-        </AuthProvider>
+        <CurrencyProvider>
+          <AuthProvider>
+            <CartProvider>
+              <GoogleProvider>
+                <Navbar />
+                <CartDrawer />
+                <main style={{ minHeight: 'calc(100vh - 400px)' }}>
+                  {children}
+                </main>
+                <Footer />
+              </GoogleProvider>
+            </CartProvider>
+          </AuthProvider>
+        </CurrencyProvider>
       </body>
     </html>
   );

@@ -3,18 +3,20 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 
 export type CartItem = {
+    cartItemId: string;
     id: string;
     name: string;
     price: number;
     imageUrl: string;
     quantity: number;
+    selectedSize: string;
 };
 
 interface CartContextType {
     items: CartItem[];
     addToCart: (item: Omit<CartItem, 'quantity'>) => void;
-    removeFromCart: (id: string) => void;
-    updateQuantity: (id: string, quantity: number) => void;
+    removeFromCart: (cartItemId: string) => void;
+    updateQuantity: (cartItemId: string, quantity: number) => void;
     clearCart: () => void;
     isCartOpen: boolean;
     setIsCartOpen: (isOpen: boolean) => void;
@@ -49,25 +51,25 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     const addToCart = (newItem: Omit<CartItem, 'quantity'>) => {
         setItems(prev => {
-            const existing = prev.find(item => item.id === newItem.id);
+            const existing = prev.find(item => item.cartItemId === newItem.cartItemId);
             if (existing) {
-                return prev.map(item => item.id === newItem.id ? { ...item, quantity: item.quantity + 1 } : item);
+                return prev.map(item => item.cartItemId === newItem.cartItemId ? { ...item, quantity: item.quantity + 1 } : item);
             }
             return [...prev, { ...newItem, quantity: 1 }];
         });
         setIsCartOpen(true);
     };
 
-    const removeFromCart = (id: string) => {
-        setItems(prev => prev.filter(item => item.id !== id));
+    const removeFromCart = (cartItemId: string) => {
+        setItems(prev => prev.filter(item => item.cartItemId !== cartItemId));
     };
 
-    const updateQuantity = (id: string, quantity: number) => {
+    const updateQuantity = (cartItemId: string, quantity: number) => {
         if (quantity < 1) {
-            removeFromCart(id);
+            removeFromCart(cartItemId);
             return;
         }
-        setItems(prev => prev.map(item => item.id === id ? { ...item, quantity } : item));
+        setItems(prev => prev.map(item => item.cartItemId === cartItemId ? { ...item, quantity } : item));
     };
 
     const clearCart = () => {

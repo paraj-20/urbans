@@ -114,6 +114,12 @@
     font-weight: 700;
 }
 
+.itemSize {
+    font-size: 0.8rem;
+    color: var(--text-muted);
+    margin-top: 0.25rem;
+}
+
 .actions {
     display: flex;
     justify-content: space-between;

@@ -11,6 +11,11 @@
     backdrop-filter: blur(10px);
     background: rgba(0, 0, 0, 0.5);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.5s ease-in-out;
+}
+
+.navbar.hidden {
+    transform: translateY(-100%);
 }
 
 .navLeft {
@@ -469,4 +474,35 @@
     .megaMenu {
         display: none;
     }
+}
+
+/* Currency Toggle Styles */
+.currencyToggle {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 20px;
+  padding: 0.2rem;
+  margin-right: 1rem;
+}
+
+.currencyBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 0.85rem;
+  padding: 0.3rem 0.6rem;
+  border-radius: 15px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-weight: 600;
+}
+
+.currencyBtn:hover {
+  color: rgba(255, 255, 255, 0.8);
+}
+
+.currencyBtn.activeCurrency {
+  background: rgba(255, 255, 255, 0.15);
+  color: white;
 }

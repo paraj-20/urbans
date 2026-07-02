@@ -9,7 +9,7 @@ export async function POST(req: Request) {
         const user = await getUserSession();
         if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
 
-        const { items, total } = await req.json();
+        const { items, total, currency = 'USD' } = await req.json();
 
         // 1. Check cart validity
         if (!items || items.length === 0) {
@@ -21,13 +21,12 @@ export async function POST(req: Request) {
         }
 
         // 2. Create Razorpay Order
-        // Razorpay expects amount in paise (1 INR = 100 paise, or 1 USD = 100 cents)
-        // We will assume USD for now, so total * 100 to convert to cents
-        const amountInCents = Math.round(total * 100);
+        // Razorpay expects amount in subunits (paise for INR, cents for USD)
+        const amountInSubunits = Math.round(total * 100);
 
         const options = {
-            amount: amountInCents,
-            currency: 'INR',
+            amount: amountInSubunits,
+            currency: currency,
             receipt: `rcptid_${String(user.id).substring(0, 10)}_${Date.now()}`,
             notes: {
                 userId: String(user.id).substring(0, 40),

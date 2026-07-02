@@ -1,7 +1,12 @@
+"use client";
+
 import React from 'react';
 import styles from '@/components/auth.module.css'; // Reusing premium aesthetic container
+import { useCurrency } from '@/context/CurrencyContext';
 
 export default function ShippingPolicy() {
+    const { formatPrice } = useCurrency();
+
     return (
         <div className={styles.container} style={{ alignItems: 'flex-start', paddingTop: '4rem' }}>
             <div className={styles.card} style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'left' }}>
@@ -19,9 +24,9 @@ export default function ShippingPolicy() {
                     <section>
                         <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '1rem' }}>2. DOMESTIC SHIPPING RATES AND ESTIMATES</h2>
                         <ul style={{ paddingLeft: '1.5rem', display: 'flex', flexDirection: 'column', gap: '0.5rem' }}>
-                            <li><strong>Standard Shipping:</strong> 3-5 business days - $5.99 (Free on orders over $150)</li>
-                            <li><strong>Priority Shipping:</strong> 2 business days - $14.99</li>
-                            <li><strong>Next Day Air:</strong> 1 business day - $29.99 (Must be ordered before 12 PM EST)</li>
+                            <li><strong>Standard Shipping:</strong> 3-5 business days - {formatPrice(5.99)} (Free on orders over {formatPrice(150)})</li>
+                            <li><strong>Priority Shipping:</strong> 2 business days - {formatPrice(14.99)}</li>
+                            <li><strong>Next Day Air:</strong> 1 business day - {formatPrice(29.99)} (Must be ordered before 12 PM EST)</li>
                         </ul>
                     </section>
 

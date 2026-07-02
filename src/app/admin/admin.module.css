@@ -17,16 +17,30 @@
   border-radius: 8px;
   margin-bottom: 3rem;
   display: grid;
+  gap: 1.5rem 1rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+
+.imageUploadGroup {
+  grid-column: 1 / -1;
+  display: flex;
   gap: 1rem;
-  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  align-items: center;
 }
 
 .addForm input, .addForm select {
-  padding: 0.8rem;
-  background: rgba(255, 255, 255, 0.1);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  padding: 0.8rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
   color: white;
-  border-radius: 4px;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.addForm input:focus, .addForm select:focus {
+    outline: none;
+    border-color: var(--accent);
 }
 
 .addForm input::placeholder {
@@ -98,4 +112,237 @@
   border-radius: 4px;
   cursor: pointer;
   font-weight: bold;
+}
+
+/* NEW STYLES */
+
+.productSection {
+  background: rgba(255, 255, 255, 0.03);
+  padding: 2rem;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.sectionHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.sectionHeader h2 {
+  font-size: 1.8rem;
+  margin: 0;
+}
+
+.productCount {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.8rem;
+  border-radius: 12px;
+  font-size: 0.9rem;
+}
+
+.filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+}
+
+.searchInput {
+  flex: 1;
+  min-width: 250px;
+  padding: 0.8rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 6px;
+  font-size: 1rem;
+  transition: border-color 0.2s;
+}
+
+.searchInput:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.filterGroup {
+  display: flex;
+  gap: 1rem;
+}
+
+.filterSelect {
+  padding: 0.8rem 1rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: white;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.filterSelect:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.filterSelect option {
+  background: #111;
+  color: white;
+}
+
+.tableHeader {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px 100px 100px 160px;
+  gap: 1rem;
+  padding: 1rem;
+  font-weight: bold;
+  color: rgba(255, 255, 255, 0.6);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  margin-bottom: 1rem;
+}
+
+.productRow {
+  display: grid;
+  grid-template-columns: 80px 1fr 80px 100px 100px 160px;
+  gap: 1rem;
+  align-items: center;
+  background: transparent;
+  padding: 1rem;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.productRow:hover {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.badge {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 0.3rem 0.6rem;
+  border-radius: 4px;
+  font-size: 0.85rem;
+  text-align: center;
+}
+
+.actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.cancelBtn {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  padding: 0.5rem 1rem;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.cancelBtn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.productName {
+  font-size: 1.1rem;
+}
+
+.priceText {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.loadingText, .noProducts {
+  text-align: center;
+  padding: 3rem;
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 1.2rem;
+}
+
+.uploadLabel {
+    background: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+    padding: 0.8rem 1rem;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    transition: background 0.2s;
+    white-space: nowrap;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+}
+.uploadLabel:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+
+/* Custom Select Styles */
+.customSelectWrapper {
+    position: relative;
+    user-select: none;
+    width: 100%;
+}
+
+.customSelectTrigger {
+    padding: 0.8rem 1rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    color: white;
+    border-radius: 6px;
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    transition: border-color 0.2s;
+    font-size: 1rem;
+    height: 100%;
+}
+
+.customSelectTrigger:hover {
+    border-color: rgba(255, 255, 255, 0.3);
+}
+
+.customSelectArrow {
+    font-size: 0.8rem;
+    transition: transform 0.2s;
+    color: rgba(255, 255, 255, 0.5);
+}
+
+.customSelectDropdown {
+    position: absolute;
+    top: calc(100% + 8px);
+    left: 0;
+    width: 100%;
+    background: #111;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 8px;
+    overflow: hidden;
+    z-index: 100;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+    max-height: 300px;
+    overflow-y: auto;
+}
+
+.customSelectOption {
+    padding: 0.8rem 1rem;
+    cursor: pointer;
+    transition: background 0.2s, color 0.2s;
+    color: white;
+}
+
+.customSelectOption:hover {
+    background: var(--accent);
+    color: black;
+}
+
+.selectedOption {
+    background: rgba(255, 255, 255, 0.05);
+    color: var(--accent);
+    font-weight: bold;
 }
