@@ -21,15 +21,15 @@ export default function AuthForm({ type }: AuthFormProps) {
     const [showPassword, setShowPassword] = useState(false);
     const [error, setError] = useState('');
     const [loading, setLoading] = useState(false);
-    
+
     const router = useRouter();
     const { refreshUser } = useAuth();
 
     const finishAuth = async () => {
         await refreshUser();
-        const returnUrl = sessionStorage.getItem('urbans_return_url');
+        const returnUrl = sessionStorage.getItem('Al-Urbans_return_url');
         if (returnUrl) {
-            sessionStorage.removeItem('urbans_return_url');
+            sessionStorage.removeItem('Al-Urbans_return_url');
             router.push(returnUrl);
         } else {
             router.push('/');
@@ -108,7 +108,7 @@ export default function AuthForm({ type }: AuthFormProps) {
             setLoading(false);
         }
     };
-    
+
     // --- Render Google Step ---
     if (step === 'google') {
         return (
@@ -122,14 +122,14 @@ export default function AuthForm({ type }: AuthFormProps) {
                 <div style={{ color: 'var(--text-muted)', fontSize: '0.9rem', textAlign: 'center' }}>
                     Please click below to continue signing in securely.
                 </div>
-                
+
                 {error && <div className={styles.error} style={{ width: '100%' }}>{error}</div>}
-                
+
                 <div style={{ pointerEvents: loading ? 'none' : 'auto', opacity: loading ? 0.7 : 1, width: '100%', display: 'flex', justifyContent: 'center' }}>
                     <GoogleLogin
                         onSuccess={handleGoogleSuccess}
                         onError={() => setError('Google authentication failed. Please try again.')}
-                        theme="outline" 
+                        theme="outline"
                         shape="rectangular"
                         text={type === 'login' ? 'continue_with' : 'signin_with'}
                         size="large"
@@ -213,7 +213,7 @@ export default function AuthForm({ type }: AuthFormProps) {
                             <GoogleLogin
                                 onSuccess={handleGoogleSuccess}
                                 onError={() => setError('Google authentication failed.')}
-                                theme="outline" 
+                                theme="outline"
                                 shape="rectangular"
                                 text={type === 'login' ? 'continue_with' : 'signup_with'}
                                 size="large"

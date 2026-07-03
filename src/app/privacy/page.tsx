@@ -12,7 +12,7 @@ export default function PrivacyPolicy() {
 
                 <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem', color: '#ccc', lineHeight: '1.8' }}>
                     <section>
-                        <p>At URBANS, we take your privacy seriously. This Privacy Policy outlines how we collect, use, and share your personal information when you visit or make a purchase from our website.</p>
+                        <p>At Al-Urbans, we take your privacy seriously. This Privacy Policy outlines how we collect, use, and share your personal information when you visit or make a purchase from our website.</p>
                     </section>
 
                     <section>

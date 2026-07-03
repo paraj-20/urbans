@@ -396,6 +396,10 @@
     color: var(--accent);
 }
 
+.mobileLinkBtn.active::after {
+    content: '-';
+}
+
 .mobileSubmenu {
     display: flex;
     flex-direction: column;
@@ -461,6 +465,14 @@
 
 /* Responsive */
 @media (max-width: 1024px) {
+    .navbar {
+        padding: 1.2rem 2rem;
+    }
+
+    .navLeft {
+        gap: 2rem;
+    }
+
     .navLinks.desktopLinks {
         display: none;
     }
@@ -468,9 +480,42 @@
     .hamburgerBtn {
         display: block !important;
     }
+
+    .desktopLogo {
+        display: none !important;
+    }
+
+    .mobileLogo {
+        display: flex !important;
+    }
 }
 
 @media (max-width: 768px) {
+    .navbar {
+        padding: 1rem 1.2rem;
+    }
+
+    .navLeft {
+        gap: 1rem;
+    }
+
+    .mobileLogo {
+        font-size: 1.1rem;
+    }
+
+    .navIcons {
+        gap: 0.8rem;
+    }
+
+    .loginBtn {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.7rem;
+    }
+
+    .currencyToggle.desktopCurrency {
+        display: none;
+    }
+
     .megaMenu {
         display: none;
     }
@@ -478,31 +523,66 @@
 
 /* Currency Toggle Styles */
 .currencyToggle {
-  display: flex;
-  align-items: center;
-  background: rgba(255, 255, 255, 0.05);
-  border-radius: 20px;
-  padding: 0.2rem;
-  margin-right: 1rem;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 20px;
+    padding: 0.2rem;
+    margin-right: 1rem;
 }
 
 .currencyBtn {
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 0.85rem;
-  padding: 0.3rem 0.6rem;
-  border-radius: 15px;
-  cursor: pointer;
-  transition: all 0.3s ease;
-  font-weight: 600;
+    background: transparent;
+    border: none;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 0.85rem;
+    padding: 0.3rem 0.6rem;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    font-weight: 600;
 }
 
 .currencyBtn:hover {
-  color: rgba(255, 255, 255, 0.8);
+    color: rgba(255, 255, 255, 0.8);
 }
 
 .currencyBtn.activeCurrency {
-  background: rgba(255, 255, 255, 0.15);
-  color: white;
+    background: var(--accent);
+    color: #000;
+    /* Dark color for contrast on the accent */
+    border-radius: 15px;
+}
+
+.mobileCurrency {
+    display: none;
+    width: 100%;
+    margin: 1.5rem 0 0 0;
+    justify-content: center;
+    padding: 0.25rem;
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid var(--accent);
+    border-radius: 20px;
+}
+
+.mobileCurrency .currencyBtn {
+    flex: 1;
+    padding: 0.4rem;
+    font-size: 0.8rem;
+    border-radius: 15px;
+}
+
+@media (max-width: 768px) {
+    .mobileCurrency {
+        display: flex;
+    }
+}
+
+.mobileLogo {
+    display: none;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
 }

@@ -7,7 +7,7 @@ export default function SignupPage() {
         <div className={styles.container}>
             <div className={styles.card}>
                 <div className={styles.header}>
-                    <h2>JOIN URBANS</h2>
+                    <h2>JOIN Al-Urbans</h2>
                     <p>Create an account to complete checkout and manage your preferences.</p>
                 </div>
                 <AuthForm type="signup" />

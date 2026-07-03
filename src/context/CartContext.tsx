@@ -33,7 +33,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         setIsMounted(true);
-        const storedCart = localStorage.getItem('urbans_cart');
+        const storedCart = localStorage.getItem('Al-Urbans_cart');
         if (storedCart) {
             try {
                 setItems(JSON.parse(storedCart));
@@ -45,7 +45,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
 
     useEffect(() => {
         if (isMounted) {
-            localStorage.setItem('urbans_cart', JSON.stringify(items));
+            localStorage.setItem('Al-Urbans_cart', JSON.stringify(items));
         }
     }, [items, isMounted]);
 

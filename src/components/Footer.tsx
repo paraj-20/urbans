@@ -47,7 +47,7 @@ export default function Footer() {
 
             <div className={styles.footerTop}>
                 <div className={styles.footerLogo}>
-                    <h2>URBANS</h2>
+                    <h2>Al-Urbans</h2>
                     <p>EST. 2024</p>
                 </div>
                 <div className={styles.footerLinks}>
@@ -79,7 +79,7 @@ export default function Footer() {
             </div>
 
             <div className={styles.footerBottom}>
-                <p>© 2026 URBANS. ALL RIGHTS RESERVED.</p>
+                <p>© 2026 Al-Urbans. ALL RIGHTS RESERVED.</p>
             </div>
         </footer>
     );

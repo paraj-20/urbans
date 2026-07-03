@@ -92,11 +92,11 @@ export default function Home() {
         <div className={styles.geometricShape1}></div>
         <div className={styles.geometricShape2}></div>
         <div className={styles.geometricShape3}></div>
-        
+
         <div className={styles.statementContent}>
           <h2>WE BUILD UNIFORMS FOR THE <br /> CITY THAT NEVER SLEEPS</h2>
           <p>
-            Born in the streets, refined in the studio. URBANS represents the intersection
+            Born in the streets, refined in the studio. Al-Urbans represents the intersection
             of utility and luxury. Every thread is selected for durability, every cut
             made for movement. We don't just sell clothes; we architect your daily armor.
           </p>

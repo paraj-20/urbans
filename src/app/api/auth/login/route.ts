@@ -60,7 +60,7 @@ export async function POST(req: Request) {
 
         // Set HttpOnly auth cookie
         const cookieStore = await cookies();
-        cookieStore.set('urbans_token', token, {
+        cookieStore.set('Al-Urbans_token', token, {
             httpOnly: true,
             secure: process.env.NODE_ENV === 'production',
             sameSite: 'lax',

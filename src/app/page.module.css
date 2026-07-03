@@ -719,6 +719,8 @@
 
 @media (max-width: 768px) {
   .hero {
+    margin-top: 55px;
+    height: calc(100vh - 55px);
     flex-direction: column;
     /* Stack vertically if needed, but we used absolute bg */
     /* ensure bg image is still covering */
@@ -736,9 +738,24 @@
     /* Add bottom gradient for text contrast */
   }
 
+  .heroTitle {
+    font-size: clamp(2rem, 10vw, 4rem);
+    white-space: normal;
+    word-wrap: break-word;
+  }
+
+  .heroDesc {
+    font-size: 0.95rem;
+    margin-bottom: 2rem;
+  }
+
   .heroImageOverlay {
     /* For mobile: Move photo Left (Increase %) to bring right-side models to center */
     background-position: 80% top;
+  }
+
+  .categories {
+    padding: 4rem 1.5rem;
   }
 
   /* Adjust category grid */
@@ -748,7 +765,7 @@
   }
 
   .categoryCard {
-    height: 400px;
+    height: 500px;
   }
 
   /* Lines grid 2x2 */

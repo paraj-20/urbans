@@ -56,7 +56,7 @@
 .imageSection {
     flex: 1;
     position: relative;
-    min-height: 300px;
+    min-height: 200px;
     background: var(--secondary);
 }
 
@@ -68,24 +68,24 @@
 
 .infoSection {
     flex: 1;
-    padding: 2rem;
+    padding: 1rem;
     display: flex;
     flex-direction: column;
 }
 
 .header {
-    margin-bottom: 2rem;
+    margin-bottom: 1rem;
 }
 
 .name {
-    font-size: 2rem;
+    font-size: 1.25rem;
     font-weight: 900;
     text-transform: uppercase;
-    margin-bottom: 0.5rem;
+    margin-bottom: 0.25rem;
 }
 
 .price {
-    font-size: 1.5rem;
+    font-size: 1.15rem;
     color: var(--accent);
     font-weight: 700;
 }
@@ -127,10 +127,10 @@
 .perks {
     display: flex;
     flex-direction: column;
-    gap: 0.75rem;
-    margin-bottom: 2rem;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
     background: rgba(255, 255, 255, 0.02);
-    padding: 1.5rem;
+    padding: 1rem;
     border: 1px solid rgba(255, 255, 255, 0.05);
 }
 
@@ -162,6 +162,31 @@
 
 .addToBagBtn:hover {
     opacity: 0.9;
+}
+
+@media (min-width: 768px) {
+    .infoSection {
+        padding: 2rem;
+    }
+    
+    .header {
+        margin-bottom: 2rem;
+    }
+    
+    .name {
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .price {
+        font-size: 1.5rem;
+    }
+    
+    .perks {
+        gap: 0.75rem;
+        margin-bottom: 2rem;
+        padding: 1.5rem;
+    }
 }
 
 .addToBagBtn:disabled {

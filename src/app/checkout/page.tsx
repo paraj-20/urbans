@@ -75,7 +75,7 @@ export default function CheckoutPage() {
                 key: process.env.NEXT_PUBLIC_RAZORPAY_KEY_ID, // Enter the Key ID generated from the Dashboard
                 amount: data.amount, // Amount is in currency subunits.
                 currency: data.currency,
-                name: "URBANS Store",
+                name: "Al-Urbans Store",
                 description: "Test Transaction",
                 order_id: data.orderId, // This is a sample Order ID. Pass the `id` obtained in the response of Step 1
                 handler: function (response: any) {
@@ -93,7 +93,7 @@ export default function CheckoutPage() {
                     color: "#00ff94"
                 }
             };
-            
+
             // @ts-ignore
             const rzp1 = new window.Razorpay(options);
             rzp1.on('payment.failed', function (response: any) {
@@ -152,13 +152,13 @@ export default function CheckoutPage() {
 
                 {/* Left Column: Address and Items */}
                 <div style={{ flex: '1 1 500px', display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
-                    
+
                     {/* Delivery Address Card */}
                     <div className={styles.card} style={{ padding: '1.5rem' }}>
                         <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem' }}>
                             <h3 style={{ fontSize: '1rem', fontWeight: 600, color: 'var(--text-muted)' }}>Deliver to:</h3>
                             {!isEditingAddress && (
-                                <button 
+                                <button
                                     onClick={() => setIsEditingAddress(true)}
                                     style={{ color: 'var(--accent)', border: '1px solid var(--accent)', padding: '0.3rem 0.8rem', borderRadius: '4px', fontSize: '0.8rem', fontWeight: 700, cursor: 'pointer', background: 'transparent' }}>
                                     CHANGE
@@ -171,30 +171,30 @@ export default function CheckoutPage() {
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                     <div className={styles.inputGroup}>
                                         <label>First Name</label>
-                                        <input type="text" value={address.firstName} onChange={(e) => setAddress({...address, firstName: e.target.value})} required />
+                                        <input type="text" value={address.firstName} onChange={(e) => setAddress({ ...address, firstName: e.target.value })} required />
                                     </div>
                                     <div className={styles.inputGroup}>
                                         <label>Last Name</label>
-                                        <input type="text" value={address.lastName} onChange={(e) => setAddress({...address, lastName: e.target.value})} required />
+                                        <input type="text" value={address.lastName} onChange={(e) => setAddress({ ...address, lastName: e.target.value })} required />
                                     </div>
                                 </div>
                                 <div className={styles.inputGroup}>
                                     <label>Street Address</label>
-                                    <input type="text" value={address.street} onChange={(e) => setAddress({...address, street: e.target.value})} required />
+                                    <input type="text" value={address.street} onChange={(e) => setAddress({ ...address, street: e.target.value })} required />
                                 </div>
                                 <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                                     <div className={styles.inputGroup}>
                                         <label>City</label>
-                                        <input type="text" value={address.city} onChange={(e) => setAddress({...address, city: e.target.value})} required />
+                                        <input type="text" value={address.city} onChange={(e) => setAddress({ ...address, city: e.target.value })} required />
                                     </div>
                                     <div className={styles.inputGroup}>
                                         <label>Postal Code</label>
-                                        <input type="text" value={address.postalCode} onChange={(e) => setAddress({...address, postalCode: e.target.value})} required />
+                                        <input type="text" value={address.postalCode} onChange={(e) => setAddress({ ...address, postalCode: e.target.value })} required />
                                     </div>
                                 </div>
                                 <div className={styles.inputGroup}>
                                     <label>Phone Number</label>
-                                    <input type="text" value={address.phone} onChange={(e) => setAddress({...address, phone: e.target.value})} required />
+                                    <input type="text" value={address.phone} onChange={(e) => setAddress({ ...address, phone: e.target.value })} required />
                                 </div>
                                 <button type="submit" className={styles.submitBtn} style={{ marginTop: '0.5rem' }}>SAVE ADDRESS</button>
                             </form>
@@ -242,7 +242,7 @@ export default function CheckoutPage() {
                 <div style={{ flex: '1 1 300px' }}>
                     <div className={styles.card} style={{ padding: '1.5rem', position: 'sticky', top: '2rem' }}>
                         <h3 style={{ fontSize: '1rem', fontWeight: 700, color: 'var(--text-muted)', marginBottom: '1.5rem', letterSpacing: '0.05em' }}>PRICE DETAILS ({items.length} Items)</h3>
-                        
+
                         <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem', fontSize: '0.95rem' }}>
                             <div style={{ display: 'flex', justifyContent: 'space-between' }}>
                                 <span style={{ color: '#aaa' }}>Total MRP</span>
@@ -259,25 +259,25 @@ export default function CheckoutPage() {
                         </div>
 
                         <hr style={{ borderColor: 'rgba(255,255,255,0.1)', margin: '1.5rem 0' }} />
-                        
+
                         <div style={{ display: 'flex', justifyContent: 'space-between', fontSize: '1.2rem', fontWeight: '900' }}>
                             <span>Total Amount</span>
                             <span>{formatPrice(finalTotal)}</span>
                         </div>
-                        
+
                         <div style={{ background: 'rgba(0, 255, 148, 0.1)', color: 'var(--accent)', padding: '0.75rem', marginTop: '1.5rem', borderRadius: '4px', textAlign: 'center', fontSize: '0.9rem', fontWeight: 700 }}>
                             You will save {formatPrice(discount)} on this order
                         </div>
 
-                        <button 
-                            onClick={handleCheckout} 
+                        <button
+                            onClick={handleCheckout}
                             disabled={status === 'processing'}
-                            style={{ 
-                                width: '100%', 
-                                background: 'var(--accent)', 
-                                color: '#000', 
-                                padding: '1.2rem', 
-                                fontWeight: 900, 
+                            style={{
+                                width: '100%',
+                                background: 'var(--accent)',
+                                color: '#000',
+                                padding: '1.2rem',
+                                fontWeight: 900,
                                 fontSize: '1.1rem',
                                 borderRadius: '4px',
                                 marginTop: '1.5rem',

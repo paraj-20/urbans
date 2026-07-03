@@ -33,7 +33,7 @@ export default function ShippingPolicy() {
                     <section>
                         <h2 style={{ color: '#fff', fontSize: '1.2rem', marginBottom: '1rem' }}>3. INTERNATIONAL SHIPPING</h2>
                         <p>We offer global shipping to over 50 countries. International shipping times range from 7 to 21 business days. Shipping charges for your order will be calculated and displayed at checkout.</p>
-                        <p style={{ marginTop: '1rem' }}><em>Please note: Your order may be subject to import duties and taxes (including VAT), which are incurred once a shipment reaches your destination country. URBANS is not responsible for these charges if they are applied and are your responsibility as the customer.</em></p>
+                        <p style={{ marginTop: '1rem' }}><em>Please note: Your order may be subject to import duties and taxes (including VAT), which are incurred once a shipment reaches your destination country. Al-Urbans is not responsible for these charges if they are applied and are your responsibility as the customer.</em></p>
                     </section>
 
                     <section>

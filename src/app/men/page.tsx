@@ -67,7 +67,7 @@ export default function MenPage() {
             </SectionLayout>
 
             <SectionLayout id="clothing" title="CLOTHING" subtitle="Essentials re-imagined.">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem', gridColumn: '1 / -1' }}>
+                <div className={styles.categoriesList}>
                     {clothingCategories.map(cat => (
                         <div key={cat.id} id={cat.id} className={styles.subSection}>
                             <h3 className={styles.subTitle}>{cat.title}</h3>
@@ -82,7 +82,7 @@ export default function MenPage() {
             </SectionLayout>
 
             <SectionLayout id="accessories" title="ACCESSORIES" subtitle="Complete your look.">
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '5rem', gridColumn: '1 / -1' }}>
+                <div className={styles.categoriesList}>
                     {accessoriesCategories.map(cat => (
                         <div key={cat.id} id={cat.id} className={styles.subSection}>
                             <h3 className={styles.subTitle}>{cat.title}</h3>

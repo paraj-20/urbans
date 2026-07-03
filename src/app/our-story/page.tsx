@@ -12,7 +12,7 @@ export default function OurStory() {
         { year: "2018", title: "THE INCEPTION", desc: "Two friends, one sewing machine, and a vision to redefine streetwear. The first prototype was stitched by hand in a garage in Brooklyn." },
         { year: "2020", title: "THE DROPOUT", desc: "We quit our day jobs. Launched the first capsule collection 'FADED CONCRETE' which sold out in 48 hours. We knew we had something real." },
         { year: "2022", title: "GLOBAL EXPANSION", desc: "Opened our flagship store in Tokyo. Collaborated with underground artists and musicians who shared our ethos of raw authenticity." },
-        { year: "2024", title: "DEFINING THE SILHOUETTE", desc: "Established the URBANS design language: stark, architectural, and unapologetically bold. Featured in major fashion weeks globally." },
+        { year: "2024", title: "DEFINING THE SILHOUETTE", desc: "Established the Al-Urbans design language: stark, architectural, and unapologetically bold. Featured in major fashion weeks globally." },
         { year: "2026", title: "THE FUTURE", desc: "Launching the sustainable tech-wear line. The revolution continues with smart fabrics and zero-waste production methods." }
     ];
 
@@ -57,7 +57,7 @@ export default function OurStory() {
                 <div className={styles.overlay}></div>
                 <h1 className={styles.title}>BORN IN <br />THE DARK</h1>
                 <p className={styles.introText}>
-                    URBANS wasn't started in a boardroom. It began in a basement, fueled by caffeine, loud music, and a refusal to compromise on fit or fabric.
+                    Al-Urbans wasn't started in a boardroom. It began in a basement, fueled by caffeine, loud music, and a refusal to compromise on fit or fabric.
                 </p>
             </section>
 

@@ -32,12 +32,12 @@ export async function POST(req: Request) {
         if (event === 'order.paid') {
             const orderInfo = payload.payload.order.entity;
             const paymentInfo = payload.payload.payment.entity;
-            
+
             const userEmail = paymentInfo.notes?.email || orderInfo.notes?.email;
-            
+
             if (userEmail) {
                 console.log(`✅ Order ${orderInfo.id} paid successfully by ${userEmail}. Sending receipt...`);
-                
+
                 // Send Real Email Receipt
                 try {
                     const transporter = nodemailer.createTransport({
@@ -50,10 +50,10 @@ export async function POST(req: Request) {
 
                     const emailHtml = `
                         <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #050505; color: #fff; padding: 30px;">
-                            <h1 style="color: #00ff94; letter-spacing: 2px;">URBANS</h1>
+                            <h1 style="color: #00ff94; letter-spacing: 2px;">Al-Urbans</h1>
                             <h2 style="font-size: 18px; margin-bottom: 30px;">ORDER CONFIRMATION</h2>
                             <p>Hi there,</p>
-                            <p style="color: #ccc;">Thank you for shopping at URBANS. Your payment was successful for order <strong>#${orderInfo.id}</strong>.</p>
+                            <p style="color: #ccc;">Thank you for shopping at Al-Urbans. Your payment was successful for order <strong>#${orderInfo.id}</strong>.</p>
                             
                             <div style="background-color: #111; padding: 20px; border-radius: 4px; margin: 20px 0;">
                                 <div style="display: flex; justify-content: space-between; font-weight: bold; margin-top: 15px; font-size: 18px;">
@@ -68,12 +68,12 @@ export async function POST(req: Request) {
                     `;
 
                     await transporter.sendMail({
-                        from: '"URBANS Store" <heavygamerz2006@gmail.com>',
+                        from: '"Al-Urbans Store" <heavygamerz2006@gmail.com>',
                         to: userEmail,
-                        subject: `URBANS Receipt - Order #${orderInfo.id}`,
+                        subject: `Al-Urbans Receipt - Order #${orderInfo.id}`,
                         html: emailHtml
                     });
-                    
+
                     console.log('✅ Real email receipt sent!');
                 } catch (emailErr) {
                     console.error('❌ Email failed to send! Missing EMAIL_PASS?', emailErr);

@@ -6,7 +6,7 @@ export default function About() {
         <div className={styles.container}>
             <section className={styles.hero}>
                 <div className={styles.heroOverlay}></div>
-                <h1 className={styles.heroTitle}>WE ARE <br /> URBANS</h1>
+                <h1 className={styles.heroTitle}>WE ARE <br /> Al-Urbans</h1>
             </section>
 
             {/* Intro Stats */}
@@ -28,7 +28,7 @@ export default function About() {
             <section className={styles.mission}>
                 <h2>MISSION STATEMENT</h2>
                 <p>
-                    URBANS is a global fashion house built on the foundation of urban culture and contemporary design.
+                    Al-Urbans is a global fashion house built on the foundation of urban culture and contemporary design.
                     We bridge the gap between high fashion and everyday utility, creating pieces that empower
                     the individual to express their unique identity in the concrete jungle.
                 </p>

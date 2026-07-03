@@ -39,10 +39,10 @@ export async function POST(req: Request) {
 
             const emailHtml = `
                 <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; background-color: #050505; color: #fff; padding: 30px;">
-                    <h1 style="color: #00ff94; letter-spacing: 2px;">URBANS</h1>
+                    <h1 style="color: #00ff94; letter-spacing: 2px;">Al-Urbans</h1>
                     <h2 style="font-size: 18px; margin-bottom: 30px;">ORDER CONFIRMATION</h2>
                     <p>Hi ${user.name},</p>
-                    <p style="color: #ccc;">Thank you for shopping at URBANS. Here is your receipt for order <strong>#${orderId}</strong>:</p>
+                    <p style="color: #ccc;">Thank you for shopping at Al-Urbans. Here is your receipt for order <strong>#${orderId}</strong>:</p>
                     
                     <div style="background-color: #111; padding: 20px; border-radius: 4px; margin: 20px 0;">
                         ${items.map((item: any) => `
@@ -64,9 +64,9 @@ export async function POST(req: Request) {
 
             // Attempt to send
             await transporter.sendMail({
-                from: '"URBANS Store" <heavygamerz2006@gmail.com>',
+                from: '"Al-Urbans Store" <heavygamerz2006@gmail.com>',
                 to: user.email as string,
-                subject: `URBANS Receipt - Order #${orderId}`,
+                subject: `Al-Urbans Receipt - Order #${orderId}`,
                 html: emailHtml
             });
 

@@ -23,19 +23,18 @@ function stringToHash(string: string) {
     return Math.abs(hash);
 }
 
-// Generate base price according to logic for each category
 function getBasePrice(subcategory: string, hash: number): number {
     const sub = subcategory.toLowerCase();
     switch (sub) {
-        case 'shirts': return 50 + (hash % 40);
-        case 't-shirts': return 30 + (hash % 30);
-        case 'jackets': return 100 + (hash % 80);
-        case 'pants': return 60 + (hash % 50);
-        case 'jeans': return 70 + (hash % 50);
-        case 'aesthetics': return 40 + (hash % 40);
-        case 'caps': return 25 + (hash % 20);
-        case 'backpacks': return 80 + (hash % 60);
-        default: return 50 + (hash % 50);
+        case 'shirts': return 10 + (hash % 8);
+        case 't-shirts': return 6 + (hash % 6);
+        case 'jackets': return 20 + (hash % 16);
+        case 'pants': return 12 + (hash % 10);
+        case 'jeans': return 14 + (hash % 10);
+        case 'aesthetics': return 8 + (hash % 8);
+        case 'caps': return 5 + (hash % 4);
+        case 'backpacks': return 16 + (hash % 12);
+        default: return 10 + (hash % 10);
     }
 }
 
@@ -116,7 +115,7 @@ export async function scanTrending(category: 'MEN' | 'WOMEN'): Promise<Product[]
                     products.push({
                         id,
                         name: custom.name || `Trending ${capitalizeWords(category.toLowerCase())} ${counter}`,
-                        price: custom.price !== undefined ? custom.price : 60 + (hash % 60), 
+                        price: custom.price !== undefined ? custom.price : 12 + (hash % 12), 
                         imageUrl: custom.imageUrl || `/products/${category.toLowerCase()}/trending/${file}`,
                         category: custom.category || category,
                         subcategory: custom.subcategory || 'trending',

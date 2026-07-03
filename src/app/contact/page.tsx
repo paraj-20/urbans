@@ -70,7 +70,7 @@ export default function Contact() {
                         </div>
                         <div className={styles.detailItem}>
                             <h4>EMAIL</h4>
-                            <p>contact@urbans.com</p>
+                            <p>contact@Al-Urbans.com</p>
                         </div>
                         <div className={styles.detailItem}>
                             <h4>PHONE</h4>

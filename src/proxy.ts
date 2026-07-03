@@ -4,11 +4,11 @@ import * as jose from 'jose';
 
 // Secret key for JWT verification (same as in AuthContext/API routes)
 const JWT_SECRET = new TextEncoder().encode(
-    process.env.JWT_SECRET || 'urbans-secret-key-1234567890-super-safe'
+    process.env.JWT_SECRET || 'Al-Urbans-secret-key-1234567890-super-safe'
 );
 
 export async function proxy(request: NextRequest) {
-    const token = request.cookies.get('urbans_token')?.value;
+    const token = request.cookies.get('Al-Urbans_token')?.value;
     const { pathname } = request.nextUrl;
 
     // 1. If user is logged in and tries to access login or signup, redirect to home

@@ -16,7 +16,7 @@ export default function Navbar() {
     const { currency, setCurrency } = useCurrency();
     const router = useRouter();
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-    
+
     const [isHidden, setIsHidden] = useState(false);
     const lastScrollY = useRef(0);
     const hideTimeout = useRef<NodeJS.Timeout | null>(null);
@@ -111,9 +111,9 @@ export default function Navbar() {
                     </svg>
                 </button>
 
-                <Link href="/" className={styles.logo}>
+                <Link href="/" className={`${styles.logo} ${styles.desktopLogo}`}>
                     <div className={styles.logoIcon}></div>
-                    <span>URBANS</span>
+                    <span>Al-Urbans</span>
                 </Link>
 
                 <div className={`${styles.navLinks} ${styles.desktopLinks}`}>
@@ -138,15 +138,21 @@ export default function Navbar() {
                 </div>
             </div>
 
+            {/* Mobile Centered Logo */}
+            <Link href="/" className={`${styles.logo} ${styles.mobileLogo}`}>
+                <div className={styles.logoIcon}></div>
+                <span>Al-Urbans</span>
+            </Link>
+
             <div className={styles.navIcons}>
-                <div className={styles.currencyToggle}>
-                    <button 
+                <div className={`${styles.currencyToggle} ${styles.desktopCurrency}`}>
+                    <button
                         className={`${styles.currencyBtn} ${currency === 'USD' ? styles.activeCurrency : ''}`}
                         onClick={() => setCurrency('USD')}
                     >
                         $
                     </button>
-                    <button 
+                    <button
                         className={`${styles.currencyBtn} ${currency === 'INR' ? styles.activeCurrency : ''}`}
                         onClick={() => setCurrency('INR')}
                     >
@@ -206,9 +212,14 @@ export default function Navbar() {
             {/* Mobile Menu Overlay */}
             <div className={`${styles.mobileMenu} ${isMenuOpen ? styles.open : ''}`}>
                 <div className={styles.mobileLinks}>
-                    <button className={styles.mobileLinkBtn} onClick={() => handleCategoryClick('MEN')}>MEN</button>
+                    <button className={`${styles.mobileLinkBtn} ${activeCategory === 'MEN' ? styles.active : ''}`} onClick={() => toggleCategory('MEN')}>MEN</button>
                     {activeCategory === 'MEN' && (
                         <div className={styles.mobileSubmenu}>
+                            <div className={styles.mobileSubmenuSection}>
+                                <button className={styles.mobileSubmenuItem} onClick={() => handleCategoryClick('MEN')} style={{ fontWeight: 700, color: '#fff' }}>
+                                    All Men
+                                </button>
+                            </div>
                             {Object.entries(megaMenuData['MEN']).map(([section, items]) => (
                                 <div key={section} className={styles.mobileSubmenuSection}>
                                     <h5 className={styles.mobileSubmenuTitle}>{section}</h5>
@@ -222,9 +233,14 @@ export default function Navbar() {
                         </div>
                     )}
 
-                    <button className={styles.mobileLinkBtn} onClick={() => handleCategoryClick('WOMEN')}>WOMEN</button>
+                    <button className={`${styles.mobileLinkBtn} ${activeCategory === 'WOMEN' ? styles.active : ''}`} onClick={() => toggleCategory('WOMEN')}>WOMEN</button>
                     {activeCategory === 'WOMEN' && (
                         <div className={styles.mobileSubmenu}>
+                            <div className={styles.mobileSubmenuSection}>
+                                <button className={styles.mobileSubmenuItem} onClick={() => handleCategoryClick('WOMEN')} style={{ fontWeight: 700, color: '#fff' }}>
+                                    All Women
+                                </button>
+                            </div>
                             {Object.entries(megaMenuData['WOMEN']).map(([section, items]) => (
                                 <div key={section} className={styles.mobileSubmenuSection}>
                                     <h5 className={styles.mobileSubmenuTitle}>{section}</h5>
@@ -242,27 +258,43 @@ export default function Navbar() {
                     <Link href="/our-story" onClick={toggleMenu}>OUR STORY</Link>
                     <Link href="/blogs" onClick={toggleMenu}>BLOGS</Link>
                     <Link href="/contact" onClick={toggleMenu}>CONTACT US</Link>
+                    
+                    <div className={`${styles.currencyToggle} ${styles.mobileCurrency}`}>
+                        <button
+                            className={`${styles.currencyBtn} ${currency === 'USD' ? styles.activeCurrency : ''}`}
+                            onClick={() => { setCurrency('USD'); setIsMenuOpen(false); }}
+                        >
+                            USD ($)
+                        </button>
+                        <button
+                            className={`${styles.currencyBtn} ${currency === 'INR' ? styles.activeCurrency : ''}`}
+                            onClick={() => { setCurrency('INR'); setIsMenuOpen(false); }}
+                        >
+                            INR (₹)
+                        </button>
+                    </div>
+
                     <div className={styles.mobileAuth}>
                         {user ? (
                             <>
-                                <Link 
-                                    href="/settings" 
-                                    className={styles.loginBtn} 
+                                <Link
+                                    href="/settings"
+                                    className={styles.loginBtn}
                                     onClick={() => setIsMenuOpen(false)}
                                 >
                                     SETTINGS
                                 </Link>
-                                <button 
-                                    className={styles.userDropdownBtn} 
+                                <button
+                                    className={styles.userDropdownBtn}
                                     onClick={handleLogout}
                                 >
                                     LOGOUT
                                 </button>
                             </>
                         ) : (
-                            <Link 
-                                href="/login" 
-                                className={styles.loginBtn} 
+                            <Link
+                                href="/login"
+                                className={styles.loginBtn}
                                 onClick={() => setIsMenuOpen(false)}
                             >
                                 LOGIN

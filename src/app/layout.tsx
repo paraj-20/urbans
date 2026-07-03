@@ -21,29 +21,29 @@ import CartDrawer from "@/components/CartDrawer";
 import GoogleProvider from "@/components/GoogleProvider";
 
 export const metadata: Metadata = {
-  metadataBase: new URL('https://urbans-clothing.vercel.app'), // Update with actual URL
+  metadataBase: new URL('https://Al-Urbans-clothing.vercel.app'), // Update with actual URL
   title: {
-    default: "URBANS | Defining the Concrete Silhouette",
-    template: "%s | URBANS",
+    default: "Al-Urbans | Defining the Concrete Silhouette",
+    template: "%s | Al-Urbans",
   },
   description: "Luxury streetwear engineered for the modern metropolitan dweller. High-quality sustainable fabrics and forward-thinking silhouettes.",
   keywords: ["streetwear", "luxury", "urban fashion", "sustainable clothing", "tech-wear", "metropolitan style"],
-  authors: [{ name: "URBANS Design Team" }],
-  creator: "URBANS",
+  authors: [{ name: "Al-Urbans Design Team" }],
+  creator: "Al-Urbans",
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://urbans-clothing.vercel.app",
-    title: "URBANS | Defining the Concrete Silhouette",
+    url: "https://Al-Urbans-clothing.vercel.app",
+    title: "Al-Urbans | Defining the Concrete Silhouette",
     description: "Luxury streetwear engineered for the modern metropolitan dweller.",
-    siteName: "URBANS",
+    siteName: "Al-Urbans",
     images: [{
       url: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=1200&h=630&auto=format&fit=crop", // Add a fallback og:image
     }],
   },
   twitter: {
     card: "summary_large_image",
-    title: "URBANS | Defining the Concrete Silhouette",
+    title: "Al-Urbans | Defining the Concrete Silhouette",
     description: "Luxury streetwear engineered for the modern metropolitan dweller.",
   },
   robots: {

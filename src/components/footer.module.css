@@ -2,7 +2,7 @@
 .footer {
     background: #050505;
     padding: 4rem;
-    border-top: 1px solid var(--border);
+    border-top: 2px solid var(--accent);
 }
 
 .footerTop {
@@ -18,8 +18,10 @@
 }
 
 .footerLogo p {
-    color: var(--text-muted);
-    font-size: 0.8rem;
+    color: var(--accent);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+    font-weight: 700;
 }
 
 .footerLinks {
@@ -28,9 +30,12 @@
 }
 
 .linkColumn h4 {
-    font-size: 0.8rem;
+    font-size: 0.85rem;
     margin-bottom: 1.5rem;
-    color: var(--text-muted);
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    font-weight: 800;
 }
 
 .linkColumn a {
@@ -77,6 +82,7 @@
 .newsletterLeft h3 {
     font-size: 2rem;
     margin-bottom: 1rem;
+    color: var(--accent);
 }
 
 .newsletterLeft p {
@@ -174,32 +180,37 @@
     }
 
     .newsletterSection {
-        padding: 2rem;
+        padding: 1.5rem 1rem;
     }
 
     .newsletterContent {
         flex-direction: column;
-        padding: 2rem;
+        padding: 1.5rem 1rem;
         text-align: center;
-        gap: 2rem;
+        gap: 1.5rem;
+    }
+    
+    .newsletterLeft h3 {
+        font-size: 1.5rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .newsletterLeft p {
+        font-size: 0.85rem;
     }
 
     .enhancedInputGroup input {
-        font-size: 0.9rem;
-        padding: 1rem;
+        font-size: 0.85rem;
+        padding: 1rem 1rem;
+        padding-right: 6.5rem; /* Make room for the button */
     }
 
     .enhancedInputGroup button {
-        position: relative;
-        right: auto;
-        top: auto;
-        bottom: auto;
-        width: 100%;
-        margin-top: 1rem;
-        padding: 1rem;
-    }
-
-    .enhancedInputGroup {
-        flex-direction: column;
+        position: absolute;
+        right: 0.3rem;
+        top: 0.3rem;
+        bottom: 0.3rem;
+        padding: 0 0.8rem;
+        font-size: 0.7rem;
     }
 }

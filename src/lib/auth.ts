@@ -1,7 +1,7 @@
 import { SignJWT, jwtVerify } from 'jose';
 import { cookies } from 'next/headers';
 
-const secretKey = process.env.JWT_SECRET || 'urbans-secret-key-1234567890-super-safe';
+const secretKey = process.env.JWT_SECRET || 'Al-Urbans-secret-key-1234567890-super-safe';
 const key = new TextEncoder().encode(secretKey);
 
 export async function signToken(payload: any) {
@@ -23,7 +23,7 @@ export async function verifyToken(token: string) {
 
 export async function getUserSession() {
     const cookieStore = await cookies();
-    const token = cookieStore.get('urbans_token')?.value;
+    const token = cookieStore.get('Al-Urbans_token')?.value;
     if (!token) return null;
     return await verifyToken(token);
 }

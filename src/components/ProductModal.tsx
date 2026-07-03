@@ -94,7 +94,7 @@ export default function ProductModal({ product, onClose }: ProductModalProps) {
                         </div>
                         <div className={styles.perkItem}>
                             <ShieldCheck size={18} />
-                            <span>URBANS Assured Quality</span>
+                            <span>Al-Urbans Assured Quality</span>
                         </div>
                     </div>
 
